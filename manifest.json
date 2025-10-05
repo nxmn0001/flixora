@@ -1,0 +1,21 @@
+{
+  "name": "Flixora",
+  "short_name": "Flixora",
+  "description": "Temukan dan streaming ribuan film, serial TV, drama, dan aksi terbaru kapan saja dan di mana saja.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1F2937",
+  "theme_color": "#3B82F6",
+  "icons": [
+    {
+      "src": "/images/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
