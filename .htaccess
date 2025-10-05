@@ -1,0 +1,123 @@
+# ==============================================================================
+# File .htaccess untuk Flixora
+# ==============================================================================
+
+# Mengaktifkan modul Rewrite
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+</IfModule>
+
+# ==============================================================================
+# 1. Dokumen Error Kustom
+# Mengarahkan pengunjung ke halaman error yang sudah didesain.
+# ==============================================================================
+ErrorDocument 404 /404.html
+# Anda juga bisa membuat 403.html (Forbidden) jika diperlukan
+# ErrorDocument 403 /403.html 
+
+
+# ==============================================================================
+# 2. Aturan SEO & URL Kanonikal
+# ==============================================================================
+
+# Aturan 2.1: Alihkan semua trafik ke HTTPS (Wajib untuk keamanan & SEO)
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Aturan 2.2: Alihkan dari www ke non-www (Pilih salah satu)
+# Ini membantu SEO agar website Anda tidak memiliki dua versi (www dan non-www)
+# Gunakan blok ini jika Anda ingin alamat website menjadi: flixora.com
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+</IfModule>
+
+# --- ATAU ---
+
+# Aturan 2.3: Alihkan dari non-www ke www (Pilih salah satu)
+# Gunakan blok ini jika Anda ingin alamat website menjadi: www.flixora.com
+# Ganti "domainanda.com" dengan nama domain Anda yang sebenarnya.
+# <IfModule mod_rewrite.c>
+#     RewriteCond %{HTTP_HOST} ^domainanda\.com$ [NC]
+#     RewriteRule ^(.*)$ https://www.domainanda.com/$1 [R=301,L]
+# </IfModule>
+
+
+# ==============================================================================
+# 3. URL Bersih (Menghilangkan ekstensi .html)
+# Mengubah URL dari "flixora.com/halaman.html" menjadi "flixora.com/halaman"
+# ==============================================================================
+<IfModule mod_rewrite.c>
+    # Alihkan URL yang masih mengandung .html ke versi tanpa .html
+    RewriteCond %{THE_REQUEST} \.html
+    RewriteRule ^(.*)\.html$ /$1 [R=301,L]
+
+    # Secara internal, arahkan permintaan tanpa .html ke file .html yang sebenarnya
+    RewriteCond %{REQUEST_FILENAME}.html -f
+    RewriteRule ^(.*)$ $1.html [L]
+</IfModule>
+
+
+# ==============================================================================
+# 4. Performa: Browser Caching (Leverage Browser Caching)
+# Memberi tahu browser untuk menyimpan file statis agar loading lebih cepat.
+# ==============================================================================
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault                              "access plus 1 month"
+    ExpiresByType image/jpg                       "access plus 1 year"
+    ExpiresByType image/jpeg                      "access plus 1 year"
+    ExpiresByType image/png                       "access plus 1 year"
+    ExpiresByType image/gif                       "access plus 1 year"
+    ExpiresByType image/svg+xml                   "access plus 1 year"
+    ExpiresByType image/webp                      "access plus 1 year"
+    ExpiresByType image/x-icon                    "access plus 1 year"
+    ExpiresByType text/css                        "access plus 1 month"
+    ExpiresByType application/javascript          "access plus 1 month"
+    ExpiresByType application/x-font-woff         "access plus 1 year"
+    ExpiresByType application/font-woff2          "access plus 1 year"
+</IfModule>
+
+
+# ==============================================================================
+# 5. Performa: Kompresi File
+# Mengecilkan ukuran file HTML, CSS, JS sebelum dikirim ke browser.
+# ==============================================================================
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+
+# ==============================================================================
+# 6. Keamanan
+# ==============================================================================
+
+# Aturan 6.1: Matikan daftar isi direktori
+# Mencegah orang lain melihat daftar file di dalam folder Anda.
+Options -Indexes
+
+# Aturan 6.2: Lindungi file sensitif
+# Mencegah akses langsung ke file .htaccess dari browser.
+<Files ".htaccess">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Aturan 6.3: Tambahkan Header Keamanan Dasar
+<IfModule mod_headers.c>
+    # Mencegah website Anda ditampilkan dalam <iframe> di situs lain (Clickjacking)
+    Header always set X-Frame-Options "SAMEORIGIN"
+    # Mencegah browser menebak tipe konten file secara salah
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>
