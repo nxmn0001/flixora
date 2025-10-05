@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Flixora - Discover & Stream Movies</title>
+    <meta name="description" content="Flixora adalah tempat untuk nonton dan streaming film dari semua genre. Temukan film terbaru, serial TV, drama, dan aksi kapan saja.">
+    <meta name="keywords" content="Flixora, nonton film, streaming film, film online, serial tv, nonton series, film terbaru, bioskop online, film aksi, drama, sci-fi, komedi, horor">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-color: #FFFFFF;
+            --surface-color: #F9FAFB;
+            --primary-text-color: #111827;
+            --secondary-text-color: #6B7280;
+            --border-color: #E5E7EB;
+            --accent-color: #3B82F6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --font-family: 'Manrope', sans-serif;
+        }
+
+        body.dark-mode {
+            --bg-color: #111827;
+            --surface-color: #1F2937;
+            --primary-text-color: #F9FAFB;
+            --secondary-text-color: #9CA3AF;
+            --border-color: #374151;
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--surface-color);
+            color: var(--primary-text-color);
+            font-family: var(--font-family);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        input, textarea {
+            user-select: auto;
+            -webkit-user-select: auto;
+        }
+        
+        img {
+            pointer-events: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        *:focus, *:focus-visible {
+            outline: none;
+        }
+        .action-button:focus-visible, .hero-btn:focus-visible {
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        #search-input:focus {
+             border-color: var(--accent-color);
+             box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .request-btn:focus-visible, .thumbnail-card:focus-visible {
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .main-header {
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            height: 42px; 
+        }
+        
+        .header-main-view, .header-search-view {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+            background-color: var(--bg-color);
+        }
+        
+        .logo { font-size: 1.8rem; font-weight: 800; text-decoration: none; color: var(--primary-text-color); flex-shrink: 0; }
+        .logo span { color: var(--accent-color); }
+        
+        .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .action-button { display: flex; align-items: center; justify-content: center; cursor: pointer; background: none; border: none; border-radius: 50%; padding: 5px; color: var(--primary-text-color); }
+
+        .desktop-nav { display: none; }
+        @media (min-width: 992px) {
+            .desktop-nav { display: block; margin: 0 auto; } 
+            .mobile-menu-toggle { display: none !important; } 
+        }
+
+        .nav-menu { list-style: none; display: flex; gap: 30px; align-items: center; }
+        .nav-item { position: relative; }
+        .nav-link { text-decoration: none; color: var(--secondary-text-color); font-weight: 600; font-size: 1rem; padding: 10px 5px; transition: color 0.2s ease; display: flex; align-items: center; gap: 5px; }
+        .nav-link:hover { color: var(--primary-text-color); }
+        .dropdown { position: absolute; top: 120%; left: 50%; transform: translateX(-50%); width: 200px; background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); padding: 10px; list-style: none; opacity: 0; visibility: hidden; transition: all 0.2s ease; }
+        .nav-item:hover .dropdown { opacity: 1; visibility: visible; }
+        .dropdown-item a { display: block; padding: 12px 15px; text-decoration: none; color: var(--secondary-text-color); font-weight: 500; border-radius: 8px; transition: all 0.2s; }
+        .dropdown-item a:hover { background-color: var(--surface-color); color: var(--primary-text-color); }
+
+        .header-search-view {
+            transform: scale(1.1);
+            opacity: 0;
+            pointer-events: none;
+            gap: 15px;
+        }
+
+        #search-input { width: 100%; flex-grow: 1; padding: 10px 15px; font-size: 1rem; border-radius: 25px; border: 1px solid var(--border-color); background-color: var(--surface-color); color: var(--primary-text-color); }
+        
+        .navbar.search-active .header-main-view { transform: scale(0.9); opacity: 0; pointer-events: none; }
+        .navbar.search-active .header-search-view { transform: scale(1); opacity: 1; pointer-events: auto; }
+
+        .mobile-nav { 
+            display: none; 
+            position: absolute; 
+            top: calc(100% + 1px);
+            left: 0; 
+            width: 100%;
+            background-color: var(--bg-color); 
+            border-bottom: 1px solid var(--border-color); 
+            padding: 0;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+        }
+        .mobile-nav.active { display: block; }
+        .mobile-nav .nav-menu { flex-direction: column; gap: 0; }
+        .mobile-nav .nav-item { width: 100%; }
+        .mobile-nav .nav-link { 
+            color: var(--secondary-text-color); 
+            font-weight: 600; 
+            padding: 20px 5%;
+            width: 100%; 
+            display: block; 
+            border-bottom: 1px solid var(--border-color);
+        }
+         .mobile-nav .nav-item:last-child .nav-link { border-bottom: none; }
+
+        main { padding: 40px 0; }
+
+        .hero-section {
+            text-align: center;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--primary-text-color);
+        }
+        .hero-title span {
+            color: var(--accent-color);
+        }
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--secondary-text-color);
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .hero-btn.primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .hero-btn.primary:hover {
+            background-color: #2563EB;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+        .hero-btn.secondary {
+            background-color: var(--surface-color);
+            color: var(--primary-text-color);
+            border: 1px solid var(--border-color);
+        }
+        .hero-btn.secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2rem; }
+            .hero-section { padding: 40px 0; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-btn {
+                padding: 10px 16px;
+                font-size: 0.9rem; 
+                gap: 6px;
+            }
+        }
+        
+        #content-grid {
+            scroll-margin-top: 90px; 
+        }
+        
+        .content-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        @media (min-width: 768px) { .content-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (min-width: 1024px) { .content-grid { grid-template-columns: repeat(6, 1fr); } }
+
+        .thumbnail-card { background-color: var(--bg-color); border-radius: 12px; overflow: hidden; position: relative; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease; }
+        .thumbnail-card:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 10; cursor: pointer; }
+
+        .thumbnail-image {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            display: block;
+            filter: blur(1.5px);
+            transition: filter 0.3s ease-in-out;
+        }
+        .thumbnail-card:hover .thumbnail-image {
+            filter: blur(0);
+        }
+
+        .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 2.5rem 1rem 1rem 1rem; background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); }
+        .card-title { font-size: 1.1rem; font-weight: 700; color: #FFFFFF; }
+        
+        #no-results-message { 
+            display: none; 
+            text-align: center; 
+            padding: 50px 0; 
+            color: var(--secondary-text-color);
+            grid-column: 1 / -1; /* Agar posisi selalu di tengah grid */
+        }
+        #no-results-message p { margin: 10px 0 20px 0; }
+        
+        .request-btn { display: inline-block; background-color: var(--accent-color); color: white; border: none; padding: 12px 25px; font-size: 1rem; font-weight: 600; border-radius: 25px; cursor: pointer; transition: background-color 0.2s; text-decoration: none; }
+        .request-btn:hover { background-color: #2563EB; }
+
+        .load-more-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .load-more-btn {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--primary-text-color);
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .load-more-btn:hover {
+            background-color: var(--border-color);
+        }
+        .load-more-btn:focus-visible {
+             box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        #scroll-to-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            z-index: 1000;
+        }
+        #scroll-to-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .main-footer {
+            padding: 40px 0 20px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--secondary-text-color);
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        #adblock-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 20px;
+        }
+        .adblock-modal {
+            max-width: 450px;
+        }
+        .adblock-icon {
+            width: 80px;
+            height: 80px;
+            stroke-width: 1.5;
+            margin-bottom: 20px;
+            color: #F87171;
+        }
+        .adblock-modal h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .adblock-modal p {
+            font-size: 1.1rem;
+            color: #E5E7EB;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="adblock-overlay">
+        <div class="adblock-modal">
+            <i data-lucide="shield-off" class="adblock-icon"></i>
+            <h2>AdBlock Terdeteksi</h2>
+            <p>Situs ini didukung oleh iklan. Mohon matikan pemblokir iklan Anda untuk melanjutkan.</p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="navbar" id="navbar">
+                <div class="header-main-view">
+                    <div class="logo">Flix<span>ora</span></div>
+                    <nav class="desktop-nav">
+                        <ul class="nav-menu">
+                            <li class="nav-item"><a href="#" class="nav-link active">Home</a></li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Browse <i data-lucide="chevron-down" style="width:16px;"></i></a>
+                                <ul class="dropdown">
+                                    <li class="dropdown-item"><a href="#">Movies</a></li>
+                                    <li class="dropdown-item"><a href="#">Series</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a href="#" class="nav-link">My List</a></li>
+                        </ul>
+                    </nav>
+                    <div class="nav-right">
+                        <a href="#" target="_blank" class="action-button" aria-label="Join Telegram"><i data-lucide="send"></i></a>
+                        <button class="action-button" id="theme-toggle-btn" aria-label="Toggle Theme">
+                            <i class="icon-sun" data-lucide="sun"></i>
+                            <i class="icon-moon" data-lucide="moon" style="display: none;"></i>
+                        </button>
+                        <button class="action-button" id="search-open-btn" aria-label="Open Search"><i data-lucide="search"></i></button>
+                        <button class="action-button mobile-menu-toggle" aria-label="Open Menu"><i data-lucide="menu"></i></button>
+                    </div>
+                </div>
+                <div class="header-search-view">
+                    <button class="action-button" id="search-close-btn" aria-label="Close Search"><i data-lucide="arrow-left"></i></button>
+                    <input type="text" id="search-input" placeholder="Search title...">
+                </div>
+            </div>
+        </div>
+        <div class="mobile-nav" id="mobile-menu">
+             <ul class="nav-menu">
+                <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Movies</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Series</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">My List</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="hero-section">
+                <h1 class="hero-title">Selamat Datang di Website Flix<span>ora</span></h1>
+                <p class="hero-description">Temukan ribuan film, serial TV, drama, dan aksi terbaru kapan saja dan di mana saja.</p>
+                <div class="hero-buttons">
+                    <a href="#" target="_blank" class="hero-btn secondary">
+                        <i data-lucide="send"></i>
+                        Gabung Telegram
+                    </a>
+                    <a href="#content-grid" class="hero-btn primary">
+                        <i data-lucide="play"></i>
+                        Mulai Nonton
+                    </a>
+                </div>
+            </section>
+            
+            <div class="content-grid" id="content-grid">
+                 <div id="no-results-message">
+                    <h3>No results found</h3>
+                    <p>Can't find what you're looking for?</p>
+                    <a href="#" class="request-btn">Request Content</a>
+                </div>
+                <div class="thumbnail-card" data-title="Galactic Frontiers"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Galactic Frontiers</h3></div></div>
+                <div class="thumbnail-card" data-title="The Chef's Secret"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">The Chef's Secret</h3></div></div>
+                <div class="thumbnail-card" data-title="Echoes of the Past"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Echoes of the Past</h3></div></div>
+                <div class="thumbnail-card" data-title="City of Neon"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">City of Neon</h3></div></div>
+                <div class="thumbnail-card" data-title="Mountain Siege"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Mountain Siege</h3></div></div>
+                <div class="thumbnail-card" data-title="Project Chronos"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Project Chronos</h3></div></div>
+                <div class="thumbnail-card" data-title="Wild Savanna"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Wild Savanna</h3></div></div>
+                <div class="thumbnail-card" data-title="The Last Joke"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">The Last Joke</h3></div></div>
+                <div class="thumbnail-card" data-title="Cyber Dreams"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Cyber Dreams</h3></div></div>
+                <div class="thumbnail-card" data-title="Ocean's Heart"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Ocean's Heart</h3></div></div>
+                <div class="thumbnail-card" data-title="Desert Fury"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Desert Fury</h3></div></div>
+                <div class="thumbnail-card" data-title="The Final Voyage"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">The Final Voyage</h3></div></div>
+                <div class="thumbnail-card" data-title="Galaxy Wanderers"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Galaxy Wanderers</h3></div></div>
+                <div class="thumbnail-card" data-title="AI Uprising"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">AI Uprising</h3></div></div>
+                <div class="thumbnail-card" data-title="Neptune's Children"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Neptune's Children</h3></div></div>
+                <div class="thumbnail-card" data-title="Mars Colony One"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Mars Colony One</h3></div></div>
+                <div class="thumbnail-card" data-title="The Inheritance"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">The Inheritance</h3></div></div>
+                <div class="thumbnail-card" data-title="Lost City of Gold"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Lost City of Gold</h3></div></div>
+                <div class="thumbnail-card" data-title="Paris in Summer"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Paris in Summer</h3></div></div>
+                <div class="thumbnail-card" data-title="Dimension Drift"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Dimension Drift</h3></div></div>
+                <div class="thumbnail-card" data-title="Galactic Frontiers"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Galactic Frontiers</h3></div></div>
+                <div class="thumbnail-card" data-title="The Chef's Secret"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">The Chef's Secret</h3></div></div>
+                <div class="thumbnail-card" data-title="Echoes of the Past"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Echoes of the Past</h3></div></div>
+                <div class="thumbnail-card" data-title="City of Neon"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">City of Neon</h3></div></div>
+                <div class="thumbnail-card" data-title="Mountain Siege"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Mountain Siege</h3></div></div>
+                <div class="thumbnail-card" data-title="Project Chronos"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Project Chronos</h3></div></div>
+                <div class="thumbnail-card" data-title="Wild Savanna"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Wild Savanna</h3></div></div>
+                <div class="thumbnail-card" data-title="The Last Joke"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">The Last Joke</h3></div></div>
+                <div class="thumbnail-card" data-title="Cyber Dreams"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Cyber Dreams</h3></div></div>
+                <div class="thumbnail-card" data-title="Ocean's Heart"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Ocean's Heart</h3></div></div>
+                <div class="thumbnail-card" data-title="Desert Fury"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Desert Fury</h3></div></div>
+                <div class="thumbnail-card" data-title="The Final Voyage"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">The Final Voyage</h3></div></div>
+                <div class="thumbnail-card" data-title="Galaxy Wanderers"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Galaxy Wanderers</h3></div></div>
+                <div class="thumbnail-card" data-title="AI Uprising"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">AI Uprising</h3></div></div>
+                <div class="thumbnail-card" data-title="Neptune's Children"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Neptune's Children</h3></div></div>
+                <div class="thumbnail-card" data-title="Mars Colony One"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Mars Colony One</h3></div></div>
+                <div class="thumbnail-card" data-title="The Inheritance"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">The Inheritance</h3></div></div>
+                <div class="thumbnail-card" data-title="Lost City of Gold"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Lost City of Gold</h3></div></div>
+                <div class="thumbnail-card" data-title="Paris in Summer"><img src="testicon.jpg" alt="Thumbnail" class="thumbnail-image"><div class="card-overlay"><h3 class="card-title">Paris in Summer</h3></div></div>
+            </div>
+            
+            <div class="load-more-container" id="load-more-container">
+                <button class="load-more-btn" id="load-more-btn">Lihat Lainnya</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; <span id="copyright-year"></span> <span id="copyright-name"></span>. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <button id="scroll-to-top-btn" aria-label="Scroll to top">
+        <i data-lucide="arrow-up"></i>
+    </button>
+    
+    <script>
+        lucide.createIcons();
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Deklarasi Semua Variabel ---
+            const navbar = document.getElementById('navbar');
+            const searchInput = document.getElementById('search-input');
+            const searchOpenBtn = document.getElementById('search-open-btn');
+            const searchCloseBtn = document.getElementById('search-close-btn');
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const contentCards = document.querySelectorAll('.thumbnail-card');
+            const noResultsMessage = document.getElementById('no-results-message');
+            const themeToggleBtn = document.getElementById('theme-toggle-btn');
+            const sunIcon = themeToggleBtn.querySelector('.icon-sun');
+            const moonIcon = themeToggleBtn.querySelector('.icon-moon');
+            const yearSpan = document.getElementById('copyright-year');
+            const nameSpan = document.getElementById('copyright-name');
+            const logoName = document.querySelector('.logo').textContent;
+            const loadMoreContainer = document.getElementById('load-more-container');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
+            const heroSection = document.querySelector('.hero-section');
+            let currentlyVisible = 10;
+            
+            /* --- FITUR BARU DIMULAI --- */
+
+            // 1. Anti Klik Kanan
+            document.addEventListener('contextmenu', event => event.preventDefault());
+
+            // 2. Deteksi AdBlock Berlapis (Lebih Kuat)
+            const adBlockOverlay = document.getElementById('adblock-overlay');
+            let isAdBlockerDetected = false;
+
+            const showAdBlockerMessage = () => {
+                if (isAdBlockerDetected) return; 
+                isAdBlockerDetected = true;
+                adBlockOverlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            };
+
+            const checkAdBlock = () => {
+                // Metode 1: Jebakan Jaringan (Sangat Efektif)
+                fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", {
+                    method: 'HEAD',
+                    mode: 'no-cors'
+                })).catch(err => {
+                    showAdBlockerMessage();
+                });
+
+                // Metode 2: Elemen Umpan (Sebagai Cadangan)
+                const bait = document.createElement('div');
+                bait.innerHTML = '&nbsp;';
+                bait.className = 'ad adsbox banner-ad text-ad ad-container';
+                bait.style.cssText = 'position:absolute; left:-9999px; height:1px; width:1px; visibility:hidden; pointer-events:none;';
+                document.body.appendChild(bait);
+                
+                requestAnimationFrame(() => {
+                    if (bait.offsetHeight === 0 || bait.offsetParent === null) {
+                         showAdBlockerMessage();
+                    }
+                    document.body.removeChild(bait);
+                });
+            };
+            
+            checkAdBlock();
+
+            /* --- FITUR BARU SELESAI --- */
+
+
+            // --- SEMUA FUNGSI LAMA (UTUH KEMBALI) ---
+
+            // Logika Footer Otomatis
+            yearSpan.textContent = new Date().getFullYear();
+            nameSpan.textContent = logoName;
+
+            // Logika Mode Gelap & Terang
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                }
+            };
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            applyTheme(savedTheme);
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+
+            // Logika Pencarian
+            searchOpenBtn.addEventListener('click', () => navbar.classList.add('search-active'));
+            searchCloseBtn.addEventListener('click', () => {
+                navbar.classList.remove('search-active');
+                searchInput.value = '';
+                filterContent(); 
+            });
+
+            // Logika Menu Mobile
+            mobileMenuToggle.addEventListener('click', () => mobileMenu.classList.toggle('active'));
+            
+            // Logika Filter & Tampilan Kartu
+            const updateCardVisibility = () => {
+                const query = searchInput.value.toLowerCase().trim();
+                const allCards = Array.from(contentCards);
+                let visibleCardsCount = 0;
+
+                heroSection.style.display = query ? 'none' : 'block';
+                allCards.forEach(card => card.style.display = 'none');
+
+                if (query) {
+                    allCards.forEach(card => {
+                        const title = card.dataset.title.toLowerCase();
+                        if (title.includes(query)) {
+                            card.style.display = 'block'; 
+                            visibleCardsCount++;
+                        }
+                    });
+                    loadMoreContainer.style.display = 'none';
+                } else {
+                    allCards.slice(0, currentlyVisible).forEach(card => {
+                        card.style.display = 'block';
+                        visibleCardsCount++;
+                    });
+                    loadMoreContainer.style.display = currentlyVisible >= allCards.length ? 'none' : 'block';
+                }
+                
+                noResultsMessage.style.display = (visibleCardsCount === 0 && query) ? 'block' : 'none';
+            };
+            
+            const filterContent = () => {
+                if (!searchInput.value.toLowerCase().trim()) {
+                   currentlyVisible = 10; 
+                }
+                updateCardVisibility();
+            };
+            searchInput.addEventListener('input', filterContent);
+
+            // Logika Tombol "Lihat Lainnya"
+            loadMoreBtn.addEventListener('click', () => {
+                currentlyVisible += 10;
+                updateCardVisibility();
+            });
+
+            // Logika Tombol "Scroll ke Atas"
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Tampilkan kartu awal saat halaman dimuat
+            updateCardVisibility();
+        });
+    </script>
+</body>
+</html>
