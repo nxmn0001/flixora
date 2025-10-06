@@ -8,7 +8,7 @@
     <meta name="description" content="Flixora adalah platform streaming untuk nonton anime dan donghua subtitle Indonesia terlengkap. Temukan serial terbaru, on-going, dan tamat dengan kualitas HD.">
     <meta name="keywords" content="Flixora, nonton anime, streaming anime, nonton donghua, anime sub indo, donghua sub indo, anime terbaru, streaming online, anime on-going">
     	
-    <link rel="icon" href="icon.png" type="image/png">
+    <link rel="icon" href="../../icon.png" type="image/png">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
@@ -338,9 +338,8 @@
         .adblock-modal h2 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; }
         .adblock-modal p { font-size: 1.1rem; color: #E5E7EB; line-height: 1.6; }
     </style>
-    
     <script>(function(s){s.dataset.zone='10002293',s.src='https://groleegni.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-    
+    <script>(function(s){s.dataset.zone='10002694',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 </head>
 <body>
     
@@ -385,7 +384,7 @@
         </div>
         <div class="mobile-nav" id="mobile-menu">
               <ul class="nav-menu">
-                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="../../index" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="https://t.me/+jbwkTntNvak1MzM1" class="nav-link">Telegram</a></li>
                 <li class="nav-item"><a href="https://www.facebook.com/profile.php?id=61581908966437" class="nav-link">Facebook</a></li>
             </ul>
@@ -493,12 +492,11 @@
             };
 
             const episodeButtons = document.querySelectorAll('.episode-btn');
-            const adLink = "https://otieu.com/4/9633282";
             const playerWrapper = document.querySelector('.video-player-wrapper');
 
+            // --- [DIPERBARUI] Event listener tanpa membuka link iklan ---
             episodeButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    window.open(adLink, '_blank');
                     episodeButtons.forEach(btn => btn.classList.remove('active'));
                     button.classList.add('active');
                     const episodeNumber = button.dataset.ep;
@@ -512,7 +510,7 @@
             // --- [DIUBAH] Logika Animasi Mengetik (tanpa kursor) ---
             const placeholderElement = document.getElementById('placeholder-text');
             if (placeholderElement) {
-                const typingText = "Silahkan Pilih Episode Untuk Menonton";
+                const typingText = "Silahkan Pilih Episode Untuk Menonton ૮ ⸝⸝>  ̫ <⸝⸝ ა";
                 let charIndex = 0;
 
                 function typeWriter() {
