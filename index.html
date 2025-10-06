@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Flixora - Discover & Stream Movies</title>
-    <meta name="description" content="Flixora adalah tempat untuk nonton dan streaming film dari semua genre. Temukan film terbaru, serial TV, drama, dan aksi kapan saja.">
-    <meta name="keywords" content="Flixora, nonton film, streaming film, film online, serial tv, nonton series, film terbaru, bioskop online, film aksi, drama, sci-fi, komedi, horor">
+    <title>Flixora - Nonton Anime & Donghua Sub Indo Terlengkap</title>
+    <meta name="description" content="Flixora adalah platform streaming untuk nonton anime dan donghua subtitle Indonesia terlengkap. Temukan serial terbaru, on-going, dan tamat dengan kualitas HD.">
+    <meta name="keywords" content="Flixora, nonton anime, streaming anime, nonton donghua, dracin, drakor, anime sub indo, donghua sub indo, anime terbaru, streaming online, anime on-going">
     
+    <link rel="icon" href="/favicon.png" type="image/png">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#3B82F6">
     
@@ -248,12 +249,21 @@
             }
         }
         
+        #donghua-section, #dracin-section, #drakor-section {
+             scroll-margin-top: 90px;
+        }
+
         .section-title-wrapper {
             display: flex;
             align-items: center;
             text-align: center;
             margin: 60px 0 25px 0;
         }
+        
+         #search-results-container .section-title-wrapper {
+          margin-top: 0px;   
+          margin-bottom: 30px;
+         }
         .section-title-wrapper::before,
         .section-title-wrapper::after {
             content: '';
@@ -271,9 +281,20 @@
             display: grid; 
             grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
+            position: relative; /* Diperlukan untuk no-content-message */
+            min-height: 50px; /* Memberi tinggi minimum agar pesan terlihat */
         }
         @media (min-width: 768px) { .content-grid { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; } }
         @media (min-width: 1024px) { .content-grid { grid-template-columns: repeat(6, 1fr); } }
+        
+        .no-content-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--secondary-text-color);
+            font-style: italic;
+        }
 
         .thumbnail-card { background-color: var(--bg-color); border-radius: 12px; overflow: hidden; position: relative; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease; }
         .thumbnail-card:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 10; cursor: pointer; }
@@ -400,21 +421,9 @@
             color: #E5E7EB;
             line-height: 1.6;
         }
-
-        #click-ad-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
-
-    <div id="click-ad-overlay"></div>
 
     <div id="adblock-overlay">
         <div class="adblock-modal">
@@ -437,8 +446,8 @@
                             <li class="nav-item">
                                 <a href="#" class="nav-link">Browse <i data-lucide="chevron-down" style="width:16px;"></i></a>
                                 <ul class="dropdown">
-                                    <li class="dropdown-item"><a href="#">Movies</a></li>
-                                    <li class="dropdown-item"><a href="#">Series</a></li>
+                                    <li class="dropdown-item"><a href="#">Anime</a></li>
+                                    <li class="dropdown-item"><a href="#">Donghua</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item"><a href="#" class="nav-link">My List</a></li>
@@ -456,15 +465,15 @@
                 </div>
                 <div class="header-search-view">
                     <button class="action-button" id="search-close-btn" aria-label="Close Search"><i data-lucide="arrow-left"></i></button>
-                    <input type="text" id="search-input" placeholder="Search title...">
+                    <input type="text" id="search-input" placeholder="Cari judul anime atau donghua...">
                 </div>
             </div>
         </div>
         <div class="mobile-nav" id="mobile-menu">
              <ul class="nav-menu">
                 <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Movies</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Series</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Anime</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Donghua</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">My List</a></li>
             </ul>
         </div>
@@ -476,32 +485,52 @@
                 
                 <img src="https://flixora.my.id/flixora.png" alt="Flixora Banner" class="hero-banner">
 
-                <h1 class="hero-title">Selamat Datang di Website Flix<span>ora</span></h1>
-                <p class="hero-description">Temukan ribuan film, serial TV, drama, dan aksi terbaru kapan saja dan di mana saja.</p>
+                <h1 class="hero-title">Dunia Anime & Donghua di Flix<span>ora</span></h1>
+                <p class="hero-description">Jelajahi ribuan judul anime dan donghua subtitle Indonesia terlengkap, dari yang terbaru hingga yang klasik.</p>
+                
                 <div class="hero-buttons">
                     <a href="#" target="_blank" class="hero-btn secondary">
                         <i data-lucide="send"></i>
                         Gabung Telegram
                     </a>
-                    <a href="#rekomendasi-section" class="hero-btn primary">
+                    <a href="#donghua-section" class="hero-btn primary">
                         <i data-lucide="play"></i>
                         Mulai Nonton
                     </a>
                 </div>
             </section>
             
-            <section id="new-upload-section">
+            <section id="donghua-section">
                 <div class="section-title-wrapper">
-                    <h2>New Upload</h2>
+                    <h2>Donghua</h2>
                 </div>
-                <div class="content-grid" id="new-upload-grid"></div>
+                <div class="content-grid" id="donghua-grid">
+                    </div>
+                 <div class="load-more-container" id="load-more-donghua-container">
+                    <button class="load-more-btn" id="load-more-donghua-btn">Lihat Lainnya</button>
+                </div>
             </section>
-
-            <section id="rekomendasi-section">
+            
+            <section id="dracin-section">
                 <div class="section-title-wrapper">
-                    <h2>Rekomendasi</h2>
+                    <h2>Dracin</h2>
                 </div>
-                <div class="content-grid" id="rekomendasi-grid"></div>
+                <div class="content-grid" id="dracin-grid">
+                     </div>
+                 <div class="load-more-container" id="load-more-dracin-container">
+                    <button class="load-more-btn" id="load-more-dracin-btn">Lihat Lainnya</button>
+                </div>
+            </section>
+            
+            <section id="drakor-section">
+                <div class="section-title-wrapper">
+                    <h2>Drakor</h2>
+                </div>
+                <div class="content-grid" id="drakor-grid">
+                     </div>
+                 <div class="load-more-container" id="load-more-drakor-container">
+                    <button class="load-more-btn" id="load-more-drakor-btn">Lihat Lainnya</button>
+                </div>
             </section>
             
             <div id="search-results-container" style="display: none;">
@@ -516,29 +545,43 @@
                 </div>
             </div>
 
-            <div class="load-more-container" id="load-more-container">
-                <button class="load-more-btn" id="load-more-btn">Lihat Lainnya</button>
-            </div>
-
             <div id="card-database" style="display: none;">
-                <div class="thumbnail-card" data-title="Galactic Frontiers"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/qVdrQoB2eUUo5Y2m2n4s6i2x1L.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Galactic Frontiers</h3></div></div>
-                <div class="thumbnail-card" data-title="The Chef's Secret"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/uS9A9earyV2iG8sKwZLsE9bN6j2.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">The Chef's Secret</h3></div></div>
-                <div class="thumbnail-card" data-title="Echoes of the Past"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Echoes of the Past</h3></div></div>
-                <div class="thumbnail-card" data-title="City of Neon"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/fev8jNHhA4odVj1hL4daG046vK.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">City of Neon</h3></div></div>
-                <div class="thumbnail-card" data-title="Mountain Siege"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Mountain Siege</h3></div></div>
-                <div class="thumbnail-card" data-title="Project Chronos"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/v1QkFFQB6P022k922n1LUSdC0bc.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Project Chronos</h3></div></div>
-                <div class="thumbnail-card" data-title="Wild Savanna"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/6MKr3Pa6w4C19LpD2d2e1S02nYW.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Wild Savanna</h3></div></div>
-                <div class="thumbnail-card" data-title="The Last Joke"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/9JBEPLifmCGFgmiT2oEaOB2M9g.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">The Last Joke</h3></div></div>
-                <div class="thumbnail-card" data-title="Cyber Dreams"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/pGzBD6c7EMdYgXG1sOqwoi6T68f.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Cyber Dreams</h3></div></div>
-                <div class="thumbnail-card" data-title="Ocean's Heart"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/sK6Nr6KNUA4WlAHyNl68aUvffjv.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Ocean's Heart</h3></div></div>
-                <div class="thumbnail-card" data-title="Desert Fury"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Desert Fury</h3></div></div>
-                <div class="thumbnail-card" data-title="The Final Voyage"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/zI3E2a3WYma5w8emI35mgq5Iur.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">The Final Voyage</h3></div></div>
-                <div class="thumbnail-card" data-title="Galaxy Wanderers"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/d5iR2v6WeDCk0XGua5aN5ZspJ1.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Galaxy Wanderers</h3></div></div>
-                <div class="thumbnail-card" data-title="AI Uprising"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/A31SYjQe2t8c338B8nWhg2XNYxC.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">AI Uprising</h3></div></div>
-                <div class="thumbnail-card" data-title="Neptune's Children"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/jFK2ZL1sNMH246s1Mcg4y6260T.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Neptune's Children</h3></div></div>
-                <div class="thumbnail-card" data-title="Mars Colony One"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/gPbM7vQyvnaNm22sV1Tf4dY1Gb.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Mars Colony One</h3></div></div>
-                <div class="thumbnail-card" data-title="The Inheritance"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/6CoRTJTmijhBLJTd2rNvi58T8i.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">The Inheritance</h3></div></div>
-                <div class="thumbnail-card" data-title="Lost City of Gold"><a href="movie.html"><img src="https://image.tmdb.org/t/p/w500/7WsyChQLEftuUACvbhxZp1Qe1V.jpg" alt="Thumbnail" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Lost City of Gold</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="donghua"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="donghua"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="donghua"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="donghua"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="donghua"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="donghua"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="donghua"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="donghua"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="donghua"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="donghua"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="donghua"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="donghua"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="drakor"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="drakor"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="drakor"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="drakor"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="drakor"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="drakor"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="drakor"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="drakor"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="drakor"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="drakor"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="drakor"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="drakor"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="dracin"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="dracin"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="dracin"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="dracin"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="dracin"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="dracin"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="dracin"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="dracin"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="dracin"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="dracin"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="dracin"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
+<div class="thumbnail-card" data-title="Flixora" data-category="dracin"><a href="[LINK]"><img src="flixora.png" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Flixora</h3></div></div>
             </div>
 
         </div>
@@ -571,7 +614,7 @@
                 });
             }
 
-            // --- Variabel Global ---
+            // --- Deklarasi Variabel Global ---
             const navbar = document.getElementById('navbar');
             const searchInput = document.getElementById('search-input');
             const searchOpenBtn = document.getElementById('search-open-btn');
@@ -587,29 +630,41 @@
             const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
             const heroSection = document.querySelector('.hero-section');
             const adBlockOverlay = document.getElementById('adblock-overlay');
-            const clickAdOverlay = document.getElementById('click-ad-overlay');
-
+            
+            // --- Variabel Konten ---
             const allCardElements = Array.from(document.querySelectorAll('#card-database .thumbnail-card'));
-            const newUploadSection = document.getElementById('new-upload-section');
-            const rekomendasiSection = document.getElementById('rekomendasi-section');
-            const newUploadGrid = document.getElementById('new-upload-grid');
-            const rekomendasiGrid = document.getElementById('rekomendasi-grid');
             const searchResultsContainer = document.getElementById('search-results-container');
             const searchGrid = document.getElementById('search-grid');
             const noResultsMessage = document.getElementById('no-results-message');
-            const loadMoreContainer = document.getElementById('load-more-container');
-            const loadMoreBtn = document.getElementById('load-more-btn');
+
+            const sections = {
+                donghua: {
+                    sectionEl: document.getElementById('donghua-section'),
+                    gridEl: document.getElementById('donghua-grid'),
+                    loadMoreBtn: document.getElementById('load-more-donghua-btn'),
+                    loadMoreContainer: document.getElementById('load-more-donghua-container'),
+                    cards: allCardElements.filter(card => card.dataset.category === 'donghua'),
+                    visibleCount: 6
+                },
+                dracin: {
+                    sectionEl: document.getElementById('dracin-section'),
+                    gridEl: document.getElementById('dracin-grid'),
+                    loadMoreBtn: document.getElementById('load-more-dracin-btn'),
+                    loadMoreContainer: document.getElementById('load-more-dracin-container'),
+                    cards: allCardElements.filter(card => card.dataset.category === 'dracin'),
+                    visibleCount: 6
+                },
+                drakor: {
+                    sectionEl: document.getElementById('drakor-section'),
+                    gridEl: document.getElementById('drakor-grid'),
+                    loadMoreBtn: document.getElementById('load-more-drakor-btn'),
+                    loadMoreContainer: document.getElementById('load-more-drakor-container'),
+                    cards: allCardElements.filter(card => card.dataset.category === 'drakor'),
+                    visibleCount: 6
+                }
+            };
             
-            let shuffledCards = [];
-            let currentlyVisible = 12;
-
-            /* --- FITUR IKLAN & KEAMANAN --- */
-
-            clickAdOverlay.addEventListener('click', () => {
-                window.open('https://otieu.com/4/9633282', '_blank');
-                clickAdOverlay.style.display = 'none';
-            }, { once: true });
-
+            // --- Fitur Keamanan ---
             document.addEventListener('contextmenu', event => event.preventDefault());
 
             let isAdBlockerDetected = false;
@@ -634,68 +689,69 @@
             };
             checkAdBlock();
 
-            /* --- FUNGSI UTAMA & PEMBANTU --- */
+            // --- Fungsi Inti ---
 
-            const shuffle = (array) => {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
+            const renderCards = (gridEl, cards, count, noContentMsgEl) => {
+                gridEl.innerHTML = '';
+                if (cards.length === 0) {
+                     gridEl.innerHTML = '<p class="no-content-message">Tidak ada hasil.</p>';
+                     return;
                 }
-                return array;
+                cards.slice(0, count).forEach(card => {
+                    gridEl.appendChild(card.cloneNode(true));
+                });
             };
             
-            const renderCards = (container, cards) => {
-                 container.innerHTML = '';
-                 cards.forEach(card => {
-                    container.appendChild(card.cloneNode(true));
-                 });
+            const manageSection = (category) => {
+                const s = sections[category];
+                renderCards(s.gridEl, s.cards, s.visibleCount);
+                if (s.visibleCount >= s.cards.length || s.cards.length === 0) {
+                    s.loadMoreContainer.style.display = 'none';
+                } else {
+                    s.loadMoreContainer.style.display = 'block';
+                }
             };
 
             const manageLayout = () => {
                 const query = searchInput.value.toLowerCase().trim();
-
                 if (query) {
                     heroSection.style.display = 'none';
-                    newUploadSection.style.display = 'none';
-                    rekomendasiSection.style.display = 'none';
-                    loadMoreContainer.style.display = 'none';
+                    Object.values(sections).forEach(s => {
+                        s.sectionEl.style.display = 'none';
+                        s.loadMoreContainer.style.display = 'none';
+                    });
                     searchResultsContainer.style.display = 'block';
-
                     const filteredCards = allCardElements.filter(card => 
                         card.dataset.title.toLowerCase().includes(query)
                     );
-                    
-                    renderCards(searchGrid, filteredCards);
+                    renderCards(searchGrid, filteredCards, filteredCards.length);
                     noResultsMessage.style.display = filteredCards.length === 0 ? 'block' : 'none';
-
                 } else {
                     heroSection.style.display = 'block';
-                    newUploadSection.style.display = 'block';
-                    rekomendasiSection.style.display = 'block';
                     searchResultsContainer.style.display = 'none';
-                    
-                    renderCards(newUploadGrid, allCardElements.slice(0, 12));
-                    renderCards(rekomendasiGrid, shuffledCards.slice(0, currentlyVisible));
-                    
-                    loadMoreContainer.style.display = currentlyVisible >= shuffledCards.length ? 'none' : 'block';
+                    Object.keys(sections).forEach(cat => {
+                         sections[cat].sectionEl.style.display = 'block';
+                         manageSection(cat);
+                    });
                 }
             };
 
             const initializePage = () => {
-                shuffledCards = shuffle(allCardElements.slice());
-                manageLayout();
+                 Object.keys(sections).forEach(manageSection);
+                 manageLayout();
             };
 
-            /* --- EVENT LISTENERS --- */
+            // --- Event Listeners ---
 
-            searchInput.addEventListener('input', manageLayout);
-
-            loadMoreBtn.addEventListener('click', () => {
-                currentlyVisible += 12;
-                manageLayout();
+            Object.keys(sections).forEach(cat => {
+                const s = sections[cat];
+                s.loadMoreBtn.addEventListener('click', () => {
+                    s.visibleCount += 6;
+                    manageSection(cat);
+                });
             });
 
-            /* --- FUNGSI-FUNGSI LAMA (TETAP UTUH) --- */
+            searchInput.addEventListener('input', manageLayout);
 
             yearSpan.textContent = new Date().getFullYear();
             nameSpan.textContent = logoName;
@@ -745,6 +801,9 @@
             
             initializePage();
         });
+    </script>
+</body>
+</html>);
     </script>
 </body>
 </html>
