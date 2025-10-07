@@ -747,6 +747,7 @@
                 document.body.style.overflow = 'hidden';
             };
             const checkAdBlock = () => {
+            	const checkAdBlock = () => {
                 fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' }))
                 .catch(err => { showAdBlockerMessage(); });
                 const bait = document.createElement('div');
@@ -758,6 +759,7 @@
                     if (bait.offsetHeight === 0 || bait.offsetParent === null) { showAdBlockerMessage(); }
                     if(document.body.contains(bait)) { document.body.removeChild(bait); }
                 });
+                }
             };
             checkAdBlock();
 
