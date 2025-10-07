@@ -509,6 +509,27 @@
             color: #E5E7EB;
             line-height: 1.6;
         }
+
+        /* --- Style Notifikasi Offline --- */
+        .offline-notification {
+            position: fixed; /* Tetap di layar meskipun di-scroll */
+            bottom: -100px; /* Posisi awal, tersembunyi di bawah layar */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2c3e50; /* Warna gelap yang netral */
+            color: white;
+            padding: 14px 22px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 10000; /* Pastikan selalu di paling atas */
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animasi muncul */
+        }
+
+        .offline-notification.visible {
+            bottom: 20px; /* Posisi saat terlihat */
+        }
     </style>
 </head>
 <body>
@@ -600,7 +621,7 @@
                         <a href="donghua/tales-of-herding-gods/" class="slide" style="background-image: url('donghua/tales-of-herding-gods/gambar.jpg');">
                             <h2 class="slide-title">Tales of Herding Gods</h2>
                         </a>
-                        </div>
+                    </div>
                     <button class="slider-btn prev-btn" aria-label="Previous Slide"><i class="fas fa-chevron-left"></i></button>
                     <button class="slider-btn next-btn" aria-label="Next Slide"><i class="fas fa-chevron-right"></i></button>
                 </div>
@@ -654,7 +675,7 @@
                 <div class="thumbnail-card" data-title="battle through the heavens S5" data-category="donghua"><a href="donghua/battle-through-the-heavens-s5/"><img src="donghua/battle-through-the-heavens-s5/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">battle through the heavens S5</h3></div></div>
                 <div class="thumbnail-card" data-title="Tales of Herding Gods" data-category="donghua"><a href="donghua/tales-of-herding-gods/"><img src="donghua/tales-of-herding-gods/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Tales of Herding Gods</h3></div></div>
                 <div class="thumbnail-card" data-title="Renegade Immortal (Xian Ni)" data-category="donghua"><a href="donghua/renegade-immortal-xian-ni/"><img src="donghua/renegade-immortal-xian-ni/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Renegade Immortal (Xian Ni)</h3></div></div>
-</div>
+            </div>
 
         </div>
     </main>
@@ -669,11 +690,16 @@
         <i data-lucide="arrow-up"></i>
     </button>
     
+    <div id="offline-notification" class="offline-notification">
+        <i class="fas fa-wifi"></i> Anda sedang offline.
+    </div>
+    
     <script>
         lucide.createIcons();
         
         document.addEventListener('DOMContentLoaded', () => {
             
+            /*
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
                     navigator.serviceWorker.register('/sw.js')
@@ -685,6 +711,7 @@
                         });
                 });
             }
+            */
 
             // --- Deklarasi Variabel Global ---
             const navbar = document.getElementById('navbar');
@@ -746,19 +773,22 @@
                 adBlockOverlay.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
             };
+            
             const checkAdBlock = () => {
-            	const checkAdBlock = () => {
-                fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' }))
-                .catch(err => { showAdBlockerMessage(); });
-                const bait = document.createElement('div');
-                bait.innerHTML = '&nbsp;';
-                bait.className = 'ad adsbox banner-ad text-ad ad-container';
-                bait.style.cssText = 'position:absolute; left:-9999px; height:1px; width:1px; visibility:hidden; pointer-events:none;';
-                document.body.appendChild(bait);
-                requestAnimationFrame(() => {
-                    if (bait.offsetHeight === 0 || bait.offsetParent === null) { showAdBlockerMessage(); }
-                    if(document.body.contains(bait)) { document.body.removeChild(bait); }
-                });
+                // Skrip Adblock hanya berjalan saat online
+                if (navigator.onLine) {
+                    fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' }))
+                    .catch(err => { showAdBlockerMessage(); });
+                    
+                    const bait = document.createElement('div');
+                    bait.innerHTML = '&nbsp;';
+                    bait.className = 'ad adsbox banner-ad text-ad ad-container';
+                    bait.style.cssText = 'position:absolute; left:-9999px; height:1px; width:1px; visibility:hidden; pointer-events:none;';
+                    document.body.appendChild(bait);
+                    requestAnimationFrame(() => {
+                        if (bait.offsetHeight === 0 || bait.offsetParent === null) { showAdBlockerMessage(); }
+                        if(document.body.contains(bait)) { document.body.removeChild(bait); }
+                    });
                 }
             };
             checkAdBlock();
@@ -779,7 +809,6 @@
                 let prevTranslate = 0;
                 let animationID;
 
-                // Sembunyikan tombol jika slide kurang dari 2
                 if (slideCount <= 1) {
                     prevBtn.style.display = 'none';
                     nextBtn.style.display = 'none';
@@ -791,7 +820,7 @@
                 const dragStart = (e) => {
                     isDragging = true;
                     startPos = getPositionX(e);
-                    sliderWrapper.style.transition = 'none'; // Matikan transisi saat drag
+                    sliderWrapper.style.transition = 'none';
                     animationID = requestAnimationFrame(animation);
                 };
                 
@@ -803,10 +832,9 @@
                 };
 
                 const dragEnd = (e) => {
-                    // Cek agar klik pada link tidak dianggap drag
                     const movedBy = currentTranslate - prevTranslate;
                     if (Math.abs(movedBy) > 5) {
-                        e.preventDefault(); // Mencegah navigasi link jika user menggeser
+                        e.preventDefault();
                     }
 
                     isDragging = false;
@@ -831,14 +859,13 @@
                     setSliderPosition();
                 }
 
-                // --- Kontrol Tombol Navigasi Baru ---
                 nextBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex + 1) % slideCount; // Looping
+                    currentIndex = (currentIndex + 1) % slideCount;
                     goToSlide(currentIndex);
                 });
 
                 prevBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex - 1 + slideCount) % slideCount; // Looping
+                    currentIndex = (currentIndex - 1 + slideCount) % slideCount;
                     goToSlide(currentIndex);
                 });
 
@@ -849,7 +876,7 @@
                 sliderContainer.addEventListener('mouseup', dragEnd);
                 sliderContainer.addEventListener('touchend', dragEnd);
                 sliderContainer.addEventListener('mouseleave', () => { if (isDragging) dragEnd(); });
-                sliderContainer.addEventListener('click', dragEnd, true); // Menangani klik vs drag
+                sliderContainer.addEventListener('click', dragEnd, true);
                 
                 window.addEventListener('resize', () => goToSlide(currentIndex));
             }
@@ -880,11 +907,11 @@
 
             const manageLayout = () => {
                 const query = searchInput.value.toLowerCase().trim();
-                const bannerSection = document.querySelector('.slider-section'); // Ambil banner
+                const bannerSection = document.querySelector('.slider-section');
                 
                 if (query) {
                     heroSection.style.display = 'none';
-                    if (bannerSection) bannerSection.style.display = 'none'; // Sembunyikan banner saat mencari
+                    if (bannerSection) bannerSection.style.display = 'none';
                     Object.values(sections).forEach(s => {
                         s.sectionEl.style.display = 'none';
                         s.loadMoreContainer.style.display = 'none';
@@ -897,7 +924,7 @@
                     noResultsMessage.style.display = filteredCards.length === 0 ? 'block' : 'none';
                 } else {
                     heroSection.style.display = 'block';
-                    if (bannerSection) bannerSection.style.display = 'block'; // Tampilkan lagi banner saat pencarian kosong
+                    if (bannerSection) bannerSection.style.display = 'block';
                     searchResultsContainer.style.display = 'none';
                     Object.keys(sections).forEach(cat => {
                           sections[cat].sectionEl.style.display = 'block';
@@ -968,6 +995,25 @@
             scrollToTopBtn.addEventListener('click', () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
+            
+            // --- LOGIKA NOTIFIKASI OFFLINE BARU ---
+            const offlineNotif = document.getElementById('offline-notification');
+
+            const showOfflineNotification = () => {
+                if (offlineNotif) offlineNotif.classList.add('visible');
+            };
+
+            const hideOfflineNotification = () => {
+                if (offlineNotif) offlineNotif.classList.remove('visible');
+            };
+
+            if (!navigator.onLine) {
+                showOfflineNotification();
+            }
+
+            window.addEventListener('offline', showOfflineNotification);
+            window.addEventListener('online', hideOfflineNotification);
+            // --- AKHIR LOGIKA NOTIFIKASI OFFLINE ---
             
             initializePage();
         });
