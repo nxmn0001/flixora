@@ -407,7 +407,9 @@
                     </div>
                     <div class="episode-list">
                         <button class="episode-btn" data-ep="75">75</button>
-                    </div>
+                    
+                                <button class="episode-btn" data-ep="76">76</button>
+                            </div>
                 </div>
 
                 <div class="banner-container">
@@ -452,9 +454,9 @@
             const logoName = document.querySelector('.logo').textContent;
             const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
 
-            const episodeFrames = {
-                '75': '<iframe src="https://www.dailymotion.com/embed/video/x8qn16x" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-            };
+            const episodeFrames = {'75': '<iframe src="https://www.dailymotion.com/embed/video/x8qn16x" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+                    '76': '<iframe src="https://www.dailymotion.com/embed/video/x8quda9" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+                };
             
             const episodeButtons = document.querySelectorAll('.episode-btn');
             const playerWrapper = document.querySelector('.video-player-wrapper');
