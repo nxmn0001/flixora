@@ -8,7 +8,7 @@
 const PENGATURAN_IKLAN = [
     {
         id: 'iklan-topbar-promo',
-        aktif: false,
+        aktif: true,
         jenisPenempatan: 'top-bar',
         gambar: 'flixora.png',
         judul: 'Flixora',
