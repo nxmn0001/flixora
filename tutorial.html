@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Tutorial Download</title>
+    <meta name="description" content="Flixora adalah platform streaming untuk nonton anime dan donghua subtitle Indonesia terlengkap. Temukan serial terbaru, on-going, dan tamat dengan kualitas HD.">
+    <meta name="keywords" content="Flixora, nonton anime, streaming anime, nonton donghua, anime sub indo, donghua sub indo, anime terbaru, streaming online, anime on-going">
+    
+    <link rel="icon" href="https://flixora.my.id/icon.png" type="image/png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-color: #FFFFFF;
+            --surface-color: #F9FAFB;
+            --primary-text-color: #111827;
+            --secondary-text-color: #6B7280;
+            --border-color: #E5E7EB;
+            --accent-color: #3B82F6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --font-family: 'Manrope', sans-serif;
+        }
+
+        body.dark-mode {
+            --bg-color: #111827;
+            --surface-color: #1F2937;
+            --primary-text-color: #F9FAFB;
+            --secondary-text-color: #9CA3AF;
+            --border-color: #374151;
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--surface-color);
+            color: var(--primary-text-color);
+            font-family: var(--font-family);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        input, textarea {
+            user-select: auto;
+            -webkit-user-select: auto;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        *:focus, *:focus-visible {
+            outline: none;
+        }
+        .action-button:focus-visible, .page-btn:focus-visible, .episode-btn:focus-visible {
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .main-header {
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            height: 42px; 
+        }
+        
+        .header-main-view {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo { font-size: 1.8rem; font-weight: 800; text-decoration: none; color: var(--primary-text-color); flex-shrink: 0; }
+        .logo span { color: var(--accent-color); }
+        
+        .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .action-button { display: flex; align-items: center; justify-content: center; cursor: pointer; background: none; border: none; border-radius: 50%; padding: 5px; color: var(--primary-text-color); }
+
+        .desktop-nav { display: none; }
+        @media (min-width: 992px) {
+            .desktop-nav { display: block; margin: 0 auto; } 
+            .mobile-menu-toggle { display: none !important; } 
+        }
+
+        .nav-menu { list-style: none; display: flex; gap: 30px; align-items: center; }
+        .nav-item { position: relative; }
+        .nav-link { text-decoration: none; color: var(--secondary-text-color); font-weight: 600; font-size: 1rem; padding: 10px 5px; transition: color 0.2s ease; display: flex; align-items: center; gap: 5px; }
+        .nav-link:hover { color: var(--primary-text-color); }
+        .dropdown { position: absolute; top: 120%; left: 50%; transform: translateX(-50%); width: 200px; background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); padding: 10px; list-style: none; opacity: 0; visibility: hidden; transition: all 0.2s ease; }
+        .nav-item:hover .dropdown { opacity: 1; visibility: visible; }
+        .dropdown-item a { display: block; padding: 12px 15px; text-decoration: none; color: var(--secondary-text-color); font-weight: 500; border-radius: 8px; transition: all 0.2s; }
+        .dropdown-item a:hover { background-color: var(--surface-color); color: var(--primary-text-color); }
+
+        .mobile-nav { 
+            display: none; 
+            position: absolute; 
+            top: calc(100% + 1px);
+            left: 0; 
+            width: 100%;
+            background-color: var(--bg-color); 
+            border-bottom: 1px solid var(--border-color); 
+            padding: 0;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+        }
+        .mobile-nav.active { display: block; }
+        .mobile-nav .nav-menu { flex-direction: column; gap: 0; }
+        .mobile-nav .nav-item { width: 100%; }
+        .mobile-nav .nav-link { 
+            color: var(--secondary-text-color); 
+            font-weight: 600; 
+            padding: 20px 5%;
+            width: 100%; 
+            display: block; 
+            border-bottom: 1px solid var(--border-color);
+        }
+         .mobile-nav .nav-item:last-child .nav-link { border-bottom: none; }
+
+        main { padding: 40px 0; }
+
+        .streaming-section {
+            background-color: var(--bg-color);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+        }
+        
+        .video-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            padding: 0 5px;
+            text-align: center;
+        }
+
+        .video-player-wrapper {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background-color: #000; 
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-player-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .banner-container {
+            margin-top: 30px;
+        }
+        .info-banner {
+            width: 100%;
+            border-radius: 12px;
+            display: block;
+        }
+        
+        .promo-description {
+            text-align: center;
+            margin-top: 25px;
+            padding: 15px;
+            background-color: var(--bg-color);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--secondary-text-color);
+            border: 1px solid var(--border-color);
+        }
+        .promo-description a {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .promo-description a:hover {
+            text-decoration: underline;
+        }
+        
+        /* [DIHAPUS] CSS untuk tombol fullscreen kustom telah dihapus */
+
+        .page-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .page-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+        .page-btn.primary {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+        .page-btn.primary:hover {
+            background-color: #2563EB;
+            transform: translateY(-2px);
+        }
+        .page-btn.secondary {
+            background-color: var(--surface-color);
+            color: var(--primary-text-color);
+            border-color: var(--border-color);
+        }
+        .page-btn.secondary:hover {
+            background-color: var(--border-color);
+        }
+        
+        @media(max-width: 992px) {
+            .video-title { font-size: 1.5rem; }
+            .streaming-section { padding: 15px; }
+        }
+
+        .main-footer {
+            padding: 40px 0 20px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--secondary-text-color);
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+        
+        #scroll-to-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            z-index: 1000;
+        }
+        #scroll-to-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #adblock-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            z-index: 99999; display: none; align-items: center; justify-content: center;
+            color: #FFFFFF; text-align: center; padding: 20px;
+        }
+        .adblock-modal { max-width: 450px; }
+        .adblock-icon { width: 80px; height: 80px; stroke-width: 1.5; margin-bottom: 20px; color: #F87171; }
+        .adblock-modal h2 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; }
+        .adblock-modal p { font-size: 1.1rem; color: #E5E7EB; line-height: 1.6; }
+
+        .offline-notification {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2c3e50;
+            color: white;
+            padding: 14px 22px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 10000;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .offline-notification.visible {
+            bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="adblock-overlay">
+        <div class="adblock-modal">
+            <i data-lucide="shield-off" class="adblock-icon"></i>
+            <h2>AdBlock Terdeteksi</h2>
+            <p>Situs ini didukung oleh iklan. Mohon matikan pemblokir iklan Anda untuk melanjutkan.</p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="navbar" id="navbar">
+                <div class="header-main-view">
+                    <a href="https://flixora.my.id/index" class="logo">Flix<span>ora</span></a>
+                    <nav class="desktop-nav">
+                        <ul class="nav-menu">
+                            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Browse <i data-lucide="chevron-down" style="width:16px;"></i></a>
+                                <ul class="dropdown">
+                                    <li class="dropdown-item"><a href="#">Movies</a></li>
+                                    <li class="dropdown-item"><a href="#">Series</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a href="#" class="nav-link">My List</a></li>
+                        </ul>
+                    </nav>
+                    <div class="nav-right">
+                        <a href="https://t.me/+jbwkTntNvak1MzM1" target="_blank" class="action-button" aria-label="Join Telegram"><i data-lucide="send"></i></a>
+                        <button class="action-button" id="theme-toggle-btn" aria-label="Toggle Theme">
+                            <i class="icon-sun" data-lucide="sun"></i>
+                            <i class="icon-moon" data-lucide="moon" style="display: none;"></i>
+                        </button>
+                        <button class="action-button mobile-menu-toggle" aria-label="Open Menu"><i data-lucide="menu"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-nav" id="mobile-menu">
+             <ul class="nav-menu">
+                <li class="nav-item"><a href="https://flixora.my.id/index" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="https://t.me/+jbwkTntNvak1MzM1" class="nav-link">Telegram</a></li>
+                <li class="nav-item"><a href="https://www.facebook.com/profile.php?id=61581908966437" class="nav-link">Facebook</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="streaming-section">
+                
+                <h1 class="video-title">Tutorial Download</h1>
+
+                <div class="video-player-wrapper">
+                    <iframe src="https://cdn.jsdelivr.net/gh/nixy-pro/1@main/random/2025-10-07T17-18-57-085Z-InShot_20251007_235200046.mp4" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                
+                <div class="banner-container">
+                    <img src="https://flixora.my.id/flixora.png" alt="Flixora" class="info-banner">
+                </div>
+
+                <div class="promo-description">
+                    <p>Mau nonton film, bioskop, dracin, drakor, anime, donghua dll secara gratis? <a href="https://flixora.my.id">Klik disini</a>.</p>
+                </div>
+
+                <div class="page-actions">
+                    <a href="https://flixora.my.id" class="page-btn secondary">
+                        <i data-lucide="home"></i>                        
+                    </a>
+                    <a href="https://t.me/+jbwkTntNvak1MzM1" target="_blank" class="page-btn primary">
+                        <i data-lucide="send"></i>
+                    </a>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+    
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; <span id="copyright-year"></span> <span id="copyright-name"></span>. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <button id="scroll-to-top-btn" aria-label="Scroll to top">
+        <i data-lucide="arrow-up"></i>
+    </button>
+    
+    <div id="offline-notification" class="offline-notification">
+        <i class="fas fa-wifi"></i> Internet anda terputus.
+    </div>
+    
+    <script>
+        lucide.createIcons();
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const themeToggleBtn = document.getElementById('theme-toggle-btn');
+            const sunIcon = themeToggleBtn.querySelector('.icon-sun');
+            const moonIcon = themeToggleBtn.querySelector('.icon-moon');
+            const yearSpan = document.getElementById('copyright-year');
+            const nameSpan = document.getElementById('copyright-name');
+            const logoName = document.querySelector('.logo').textContent;
+            const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
+            
+            // [BARU & DIPERBAIKI] Logika Auto Landscape saat Fullscreen Bawaan Video
+            async function lockToLandscape() {
+                try {
+                    // Cek apakah Screen Orientation API didukung
+                    if (screen.orientation && typeof screen.orientation.lock === 'function') {
+                        await screen.orientation.lock('landscape');
+                    }
+                } catch (err) {
+                    console.error(`Gagal mengunci orientasi: ${err.message}`);
+                }
+            }
+
+            // Tambahkan event listener untuk mendeteksi perubahan mode fullscreen
+            document.addEventListener('fullscreenchange', () => {
+                // Jika browser dalam mode fullscreen (document.fullscreenElement tidak null)
+                if (document.fullscreenElement) {
+                    lockToLandscape();
+                }
+            });
+            // Untuk browser webkit (Safari, Chrome lama)
+            document.addEventListener('webkitfullscreenchange', () => {
+                if (document.webkitFullscreenElement) {
+                    lockToLandscape();
+                }
+            });
+
+
+            // [DIPERBAIKI] Skrip Adblock hanya berjalan saat online
+            const adBlockOverlay = document.getElementById('adblock-overlay');
+            let isAdBlockerDetected = false;
+            const showAdBlockerMessage = () => {
+                if (isAdBlockerDetected) return; 
+                isAdBlockerDetected = true;
+                if (adBlockOverlay) {
+                    adBlockOverlay.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }
+            };
+            const checkAdBlock = () => {
+                if (navigator.onLine) {
+                    fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' }))
+                    .catch(err => { showAdBlockerMessage(); });
+                    const bait = document.createElement('div');
+                    bait.innerHTML = '&nbsp;';
+                    bait.className = 'ad adsbox banner-ad text-ad ad-container';
+                    bait.style.cssText = 'position:absolute; left:-9999px; height:1px; width:1px; visibility:hidden; pointer-events:none;';
+                    document.body.appendChild(bait);
+                    requestAnimationFrame(() => {
+                        if (bait.offsetHeight === 0 || bait.offsetParent === null) { showAdBlockerMessage(); }
+                        if(document.body.contains(bait)) { document.body.removeChild(bait); }
+                    });
+                }
+            };
+            checkAdBlock();
+
+            // --- Fitur Lainnya ---
+            yearSpan.textContent = new Date().getFullYear();
+            nameSpan.textContent = logoName;
+
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                }
+            };
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            applyTheme(savedTheme);
+            themeToggleBtn.addEventListener('click', () => {
+                const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+
+            if(mobileMenuToggle) {
+                  mobileMenuToggle.addEventListener('click', () => mobileMenu.classList.toggle('active'));
+            }
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Logika Notifikasi Offline
+            const offlineNotif = document.getElementById('offline-notification');
+            const showOfflineNotification = () => {
+                if (offlineNotif) offlineNotif.classList.add('visible');
+            };
+            const hideOfflineNotification = () => {
+                if (offlineNotif) offlineNotif.classList.remove('visible');
+            };
+            if (!navigator.onLine) {
+                showOfflineNotification();
+            }
+            window.addEventListener('offline', showOfflineNotification);
+            window.addEventListener('online', hideOfflineNotification);
+
+            document.addEventListener('contextmenu', event => event.preventDefault());
+        });
+    </script>
+</body>
+</html>
