@@ -1,6 +1,6 @@
 /**
  * ======================================================
- * <script src="abcdefghijklmnopqrstuvwxyz.js"></script>
+ * <script src="https://flixora.my.id/flixora-iklan.js"></script>
  * ======================================================
  * Mendukung Iklan Top-Bar dan Interstitial Multi-Gambar.
  */
