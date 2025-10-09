@@ -24,8 +24,8 @@ const PENGATURAN_IKLAN = [
             link: '#'
         },
         banners: [
-            { gambarUrl: 'https://flixora.my.id/icon.png', link: 'LINK' },            
-            { gambarUrl: 'https://flixora.my.id/icon.png', link: 'LINK' }
+            { gambarUrl: 'https://flixora.my.id/1.gif', link: 'LINK' },            
+            { gambarUrl: 'https://flixora.my.id/1.gif', link: 'LINK' }
         ],
         tunda: 0
     }
