@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>battle through the heavens S5 - Flixora</title>
+    <title>Battle Through The Heavens S5 - Flixora</title>
     <meta name="description" content="Flixora adalah platform streaming untuk nonton anime dan donghua subtitle Indonesia terlengkap. Temukan serial terbaru, on-going, dan tamat dengan kualitas HD.">
     <meta name="keywords" content="Flixora, nonton anime, streaming anime, nonton donghua, anime sub indo, donghua sub indo, anime terbaru, streaming online, anime on-going">
-    	
+    
     <link rel="icon" href="../../icon.png" type="image/png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
@@ -184,8 +186,6 @@
             text-align: center;
         }
         
-        /* [DIHAPUS] CSS untuk kursor tidak lagi diperlukan */
-
         .video-player-wrapper iframe {
             position: absolute;
             top: 0;
@@ -193,6 +193,15 @@
             width: 100%;
             height: 100%;
             border: 0;
+        }
+        
+        /* === [BARU] CSS untuk Tombol Navigasi Cepat === */
+        .quick-nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Jarak antar tombol */
+            margin: 25px 0; /* Jarak atas-bawah */
+            flex-wrap: wrap; /* Agar tombol turun ke bawah di layar kecil */
         }
         
         .section-title-wrapper {
@@ -284,6 +293,12 @@
         .page-btn.secondary:hover {
             background-color: var(--border-color);
         }
+
+        .episode-section,
+        .download-section,
+        .tutorial-download-section {
+            margin-top: 50px; 
+        }
         
         @media(max-width: 992px) {
             .video-title { font-size: 1.5rem; }
@@ -333,11 +348,39 @@
             z-index: 99999; display: none; align-items: center; justify-content: center;
             color: #FFFFFF; text-align: center; padding: 20px;
         }
+        #episode-target,
+        #download-target,
+        #tutorial-target {
+           scroll-margin-top: 85px;
+         }
         .adblock-modal { max-width: 450px; }
         .adblock-icon { width: 80px; height: 80px; stroke-width: 1.5; margin-bottom: 20px; color: #F87171; }
         .adblock-modal h2 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; }
         .adblock-modal p { font-size: 1.1rem; color: #E5E7EB; line-height: 1.6; }
+
+        .offline-notification {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2c3e50;
+            color: white;
+            padding: 14px 22px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 10000;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .offline-notification.visible {
+            bottom: 20px;
+        }
     </style>
+    
 </head>
 <body>
     
@@ -381,7 +424,7 @@
             </div>
         </div>
         <div class="mobile-nav" id="mobile-menu">
-              <ul class="nav-menu">
+             <ul class="nav-menu">
                 <li class="nav-item"><a href="../../index" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="https://t.me/+jbwkTntNvak1MzM1" class="nav-link">Telegram</a></li>
                 <li class="nav-item"><a href="https://www.facebook.com/profile.php?id=61581908966437" class="nav-link">Facebook</a></li>
@@ -393,13 +436,19 @@
         <div class="container">
             <section class="streaming-section">
                 
-                <h1 class="video-title">battle through the heavens S5</h1>
+                <h1 class="video-title">Battle Through The Heavens S5</h1>
 
                 <div class="video-player-wrapper">
                      <div id="placeholder-text" class="placeholder-text"></div>
                 </div>
+
+                <div class="quick-nav-buttons">
+                    <a href="#episode-target" class="episode-btn">Episode</a>
+                    <a href="#download-target" class="episode-btn">Download</a>
+                    <a href="#tutorial-target" class="episode-btn">Tutorial</a>
+                </div>
                 
-                <div class="episode-section">
+                <div class="episode-section" id="episode-target">
                     <div class="section-title-wrapper">
                         <h3>Episode</h3>
                     </div>
@@ -415,7 +464,24 @@
                                 <button class="episode-btn" data-ep="79">79</button>
                             
                                 <button class="episode-btn" data-ep="80">80</button>
-                            </div>
+                    </div>
+                </div>
+
+                <div class="download-section" id="download-target">
+                    <div class="section-title-wrapper">
+                        <h3>Download</h3>
+                    </div>
+                    <div class="episode-list">
+                    </div>
+                </div>
+
+                <div class="tutorial-download-section" id="tutorial-target">
+                    <div class="section-title-wrapper">
+                        <h3>Tutorial Download</h3>
+                    </div>
+                    <div class="episode-list">
+                        <a href="../../tutorial" class="episode-btn" target="_blank">Lihat Tutorial</a>
+                    </div>
                 </div>
 
                 <div class="banner-container">
@@ -446,6 +512,10 @@
         <i data-lucide="arrow-up"></i>
     </button>
     
+    <div id="offline-notification" class="offline-notification">
+        <i class="fas fa-wifi"></i> Internet anda terputus.
+    </div>
+    <script src="https://flixora.my.id/flixora-iklan.js"></script>
     <script>
         lucide.createIcons();
         
@@ -460,6 +530,7 @@
             const logoName = document.querySelector('.logo').textContent;
             const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
 
+            // --- HANYA ADA DATABASE LINK NONTON ---
             const episodeFrames = {'75': '<iframe src="https://www.dailymotion.com/embed/video/x8qn16x" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
                     '76': '<iframe src="https://www.dailymotion.com/embed/video/x8quda9" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
                     '77': '<iframe src="https://geo.dailymotion.com/player/xmf3n.html?video=x8r18eo" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
@@ -467,63 +538,71 @@
                     '79': '<iframe src="https://geo.dailymotion.com/player/xmf3n.html?video=x8rfvbj" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
                     '80': '<iframe src="https://geo.dailymotion.com/player/xmf3n.html?video=x8rn326" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
                 };
-            
+            // --- TIDAK ADA LAGI JAVASCRIPT UNTUK DOWNLOAD ---
+
             const episodeButtons = document.querySelectorAll('.episode-btn');
             const playerWrapper = document.querySelector('.video-player-wrapper');
 
-            // --- [DIPERBARUI] Event listener tanpa membuka link iklan ---
             episodeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    episodeButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    const episodeNumber = button.dataset.ep;
-                    const newFrameCode = episodeFrames[episodeNumber];
-                    if (newFrameCode && playerWrapper) {
-                        playerWrapper.innerHTML = newFrameCode;
-                    }
-                });
+                // Pastikan event listener ini tidak mengganggu tombol download
+                if (button.hasAttribute('data-ep')) {
+                    button.addEventListener('click', () => {
+                        episodeButtons.forEach(btn => {
+                            if (btn.hasAttribute('data-ep')) {
+                                btn.classList.remove('active');
+                            }
+                        });
+                        button.classList.add('active');
+                        
+                        const episodeNumber = button.dataset.ep;
+                        const newFrameCode = episodeFrames[episodeNumber];
+                        if (newFrameCode && playerWrapper) {
+                            playerWrapper.innerHTML = newFrameCode;
+                        }
+                    });
+                }
             });
 
-            // --- [DIUBAH] Logika Animasi Mengetik (tanpa kursor) ---
             const placeholderElement = document.getElementById('placeholder-text');
             if (placeholderElement) {
                 const typingText = "Silahkan Pilih Episode Untuk Menonton ૮ ⸝⸝>  ̫ <⸝⸝ ა";
                 let charIndex = 0;
-
                 function typeWriter() {
                     if (charIndex < typingText.length) {
                         placeholderElement.textContent += typingText.charAt(charIndex);
                         charIndex++;
-                        setTimeout(typeWriter, 100); // Kecepatan mengetik
+                        setTimeout(typeWriter, 100);
                     }
                 }
-                typeWriter(); // Mulai animasi
+                if (playerWrapper && !playerWrapper.querySelector('iframe')) {
+                    typeWriter();
+                }
             }
-
-
-            // --- Fitur Keamanan & Lainnya (Tetap Utuh) ---
-            document.addEventListener('contextmenu', event => event.preventDefault());
-
+            
             const adBlockOverlay = document.getElementById('adblock-overlay');
             let isAdBlockerDetected = false;
             const showAdBlockerMessage = () => {
                 if (isAdBlockerDetected) return; 
                 isAdBlockerDetected = true;
-                adBlockOverlay.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
+                if (adBlockOverlay) {
+                    adBlockOverlay.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }
             };
             const checkAdBlock = () => {
-                fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' }))
-                .catch(err => { showAdBlockerMessage(); });
-                const bait = document.createElement('div');
-                bait.innerHTML = '&nbsp;';
-                bait.className = 'ad adsbox banner-ad text-ad ad-container';
-                bait.style.cssText = 'position:absolute; left:-9999px; height:1px; width:1px; visibility:hidden; pointer-events:none;';
-                document.body.appendChild(bait);
-                requestAnimationFrame(() => {
-                    if (bait.offsetHeight === 0 || bait.offsetParent === null) { showAdBlockerMessage(); }
-                    if(document.body.contains(bait)) { document.body.removeChild(bait); }
-                });
+                if (navigator.onLine) {
+                    fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' }))
+                    .catch(err => { showAdBlockerMessage(); });
+                    const bait = document.createElement('div');
+                    bait.innerHTML = '&nbsp;';
+                    bait.className = 'ad adsbox banner-ad text-ad ad-container';
+                    bait.style.cssText = 'position:absolute; left:-9999px; height:1px; width:1px; visibility:hidden; pointer-events:none;';
+                    document.body.appendChild(bait);
+                    requestAnimationFrame(() => {
+                        if (bait.offsetHeight === 0 || bait.offsetParent === null) { showAdBlockerMessage(); }
+                        if(document.body.contains(bait)) { document.body.removeChild(bait); }
+                    });
+                }
             };
             checkAdBlock();
 
@@ -564,6 +643,20 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
 
+            const offlineNotif = document.getElementById('offline-notification');
+            const showOfflineNotification = () => {
+                if (offlineNotif) offlineNotif.classList.add('visible');
+            };
+            const hideOfflineNotification = () => {
+                if (offlineNotif) offlineNotif.classList.remove('visible');
+            };
+            if (!navigator.onLine) {
+                showOfflineNotification();
+            }
+            window.addEventListener('offline', showOfflineNotification);
+            window.addEventListener('online', hideOfflineNotification);
+
+            document.addEventListener('contextmenu', event => event.preventDefault());
         });
     </script>
 </body>
