@@ -18,7 +18,7 @@ const PENGATURAN_IKLAN = [
     {
         // --- 2. IKLAN GAMBAR INTERSTITIAL (FULLSCREEN) - TEMA VERTIKAL BARU ---
         id: 'iklan-gambar-utama',
-        aktif: false,
+        aktif: true,
         jenisPenempatan: 'interstitial-gambar',
         
         tombolUtama: {
