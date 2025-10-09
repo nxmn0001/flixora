@@ -27,7 +27,7 @@ const PENGATURAN_IKLAN = [
         },
 
         banners: [
-            { gambarUrl: '1.gif', link: 'LINK' },            
+            { gambarUrl: 'icon.png', link: 'LINK' },            
             { gambarUrl: '1.gif', link: 'LINK' }
         ],
         
