@@ -8,7 +8,7 @@
 const PENGATURAN_IKLAN = [
     {
         id: 'iklan-topbar-promo',
-        aktif: true,
+        aktif: false,
         jenisPenempatan: 'top-bar',
         gambar: 'flixora.png',
         judul: 'Flixora',
@@ -27,7 +27,7 @@ const PENGATURAN_IKLAN = [
             { gambarUrl: 'https://flixora.my.id/icon.png', link: 'LINK' },            
             { gambarUrl: 'https://flixora.my.id/icon.png', link: 'LINK' }
         ],
-        tunda: 3
+        tunda: 0
     }
 ];
 
