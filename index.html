@@ -337,7 +337,7 @@
         }
         /* --- AKHIR STYLE BANNER BARU --- */
         
-        #donghua-section, #dracin-section, #drakor-section {
+        #donghua-section, #random-section {
              scroll-margin-top: 90px;
         }
 
@@ -349,8 +349,8 @@
         }
         
          #search-results-container .section-title-wrapper {
-         margin-top: 0px;   
-         margin-bottom: 30px;
+        margin-top: 0px;   
+        margin-bottom: 30px;
          }
         .section-title-wrapper::before,
         .section-title-wrapper::after {
@@ -363,6 +363,14 @@
             font-weight: 700;
             padding: 0 20px;
             color: var(--primary-text-color);
+        }
+        
+        .section-description {
+            text-align: center;
+            color: var(--secondary-text-color);
+            margin: -15px auto 30px auto;
+            font-size: 0.9rem;
+            max-width: 500px;
         }
         
         .content-grid { 
@@ -631,34 +639,23 @@
                     <h2>Donghua</h2>
                 </div>
                 <div class="content-grid" id="donghua-grid">
-                 </div>
+               </div>
                <div class="load-more-container" id="load-more-donghua-container">
                     <button class="load-more-btn" id="load-more-donghua-btn">Lihat Lainnya</button>
                 </div>
             </section>
             
-            <section id="dracin-section">
+            <section id="random-section">
                 <div class="section-title-wrapper">
-                    <h2>Dracin</h2>
+                    <h2>Random Flixora</h2>
                 </div>
-                <div class="content-grid" id="dracin-grid">
-                     </div>
-               <div class="load-more-container" id="load-more-dracin-container">
-                    <button class="load-more-btn" id="load-more-dracin-btn">Lihat Lainnya</button>
+                <p class="section-description">Film, bioskop, drakor, dracin, dll</p>
+                <div class="content-grid" id="random-grid">
+                       </div>
+               <div class="load-more-container" id="load-more-random-container">
+                    <button class="load-more-btn" id="load-more-random-btn">Lihat Lainnya</button>
                 </div>
             </section>
-            
-            <section id="drakor-section">
-                <div class="section-title-wrapper">
-                    <h2>Drakor</h2>
-                </div>
-                <div class="content-grid" id="drakor-grid">
-                     </div>
-               <div class="load-more-container" id="load-more-drakor-container">
-                    <button class="load-more-btn" id="load-more-drakor-btn">Lihat Lainnya</button>
-                </div>
-            </section>
-            
             <div id="search-results-container" style="display: none;">
                  <div class="section-title-wrapper">
                     <h2>Hasil Pencarian</h2>
@@ -746,20 +743,12 @@
                     cards: allCardElements.filter(card => card.dataset.category === 'donghua'),
                     visibleCount: 6
                 },
-                dracin: {
-                    sectionEl: document.getElementById('dracin-section'),
-                    gridEl: document.getElementById('dracin-grid'),
-                    loadMoreBtn: document.getElementById('load-more-dracin-btn'),
-                    loadMoreContainer: document.getElementById('load-more-dracin-container'),
-                    cards: allCardElements.filter(card => card.dataset.category === 'dracin'),
-                    visibleCount: 6
-                },
-                drakor: {
-                    sectionEl: document.getElementById('drakor-section'),
-                    gridEl: document.getElementById('drakor-grid'),
-                    loadMoreBtn: document.getElementById('load-more-drakor-btn'),
-                    loadMoreContainer: document.getElementById('load-more-drakor-container'),
-                    cards: allCardElements.filter(card => card.dataset.category === 'drakor'),
+                random: {
+                    sectionEl: document.getElementById('random-section'),
+                    gridEl: document.getElementById('random-grid'),
+                    loadMoreBtn: document.getElementById('load-more-random-btn'),
+                    loadMoreContainer: document.getElementById('load-more-random-container'),
+                    cards: allCardElements.filter(card => card.dataset.category === 'random'), // Akan kosong
                     visibleCount: 6
                 }
             };
@@ -928,8 +917,8 @@
                     if (bannerSection) bannerSection.style.display = 'block';
                     searchResultsContainer.style.display = 'none';
                     Object.keys(sections).forEach(cat => {
-                          sections[cat].sectionEl.style.display = 'block';
-                          manageSection(cat);
+                         sections[cat].sectionEl.style.display = 'block';
+                         manageSection(cat);
                     });
                 }
             };
