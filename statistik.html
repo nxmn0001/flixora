@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Statistics - Flixora</title>
+    
+    <link rel="icon" href="https://flixora.my.id/icon.png" type="image/png">
+    <meta name="theme-color" content="#3B82F6">
+    
+    <style>
+        /* Mengimpor Font Manrope yang digunakan di Flixora */
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+        /* Variabel Warna dari CSS Flixora */
+        :root {
+            --bg-color: #FFFFFF;
+            --surface-color: #F9FAFB;
+            --primary-text-color: #111827;
+            --secondary-text-color: #6B7280;
+            --border-color: #E5E7EB;
+            --accent-color: #3B82F6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --font-family: 'Manrope', sans-serif;
+        }
+
+        body.dark-mode {
+            --bg-color: #111827;
+            --surface-color: #1F2937;
+            --primary-text-color: #F9FAFB;
+            --secondary-text-color: #9CA3AF;
+            --border-color: #374151;
+        }
+
+        /* Reset & Style Dasar dari Flixora */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-text-color);
+            font-family: var(--font-family);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container { width: 90%; max-width: 1400px; margin: 0 auto; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Header & Logo dari Flixora */
+        .main-header {
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            position: sticky; top: 0; z-index: 999;
+        }
+        .navbar { display: flex; align-items: center; justify-content: space-between; height: 42px; }
+        .logo { font-size: 1.8rem; font-weight: 800; color: var(--primary-text-color); }
+        .logo span { color: var(--accent-color); }
+        .nav-right { display: flex; align-items: center; gap: 10px; }
+        .action-button { display: flex; align-items: center; justify-content: center; cursor: pointer; background: none; border: none; border-radius: 50%; padding: 5px; color: var(--primary-text-color); }
+
+        /* Main Content & Judul Section dari Flixora */
+        main { padding: 40px 0; }
+        .section-title-wrapper {
+            display: flex; align-items: center; text-align: center; margin: 20px 0 35px 0;
+        }
+        .section-title-wrapper::before, .section-title-wrapper::after {
+            content: ''; flex: 1; border-bottom: 2px solid var(--border-color);
+        }
+        .section-title-wrapper h2 {
+            font-size: 1.5rem; font-weight: 700; padding: 0 20px; color: var(--primary-text-color);
+        }
+
+        /* --- STYLE BARU: Panel Statistik & Banner --- */
+        .stats-banner {
+            display: block;
+            max-width: 300px;
+            width: 100%;
+            margin: 0 auto 30px auto;
+            border-radius: 12px;
+            animation: fadeIn 1s ease-out;
+        }
+        .stats-panel {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            animation: fadeIn 1s ease-out 0.2s; /* Sedikit delay agar muncul setelah banner */
+            animation-fill-mode: both;
+        }
+        .stats-icon {
+            color: var(--accent-color);
+            width: 48px;
+            height: 48px;
+            stroke-width: 1.5;
+            margin-bottom: 20px;
+        }
+        .stats-value {
+            font-size: 6rem;
+            font-weight: 800;
+            color: var(--primary-text-color);
+            line-height: 1;
+            transition: opacity 0.2s ease-in-out;
+        }
+        .stats-value.updating {
+            opacity: 0;
+        }
+        .stats-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--secondary-text-color);
+            margin-top: 10px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer dari Flixora */
+        .main-footer {
+            padding: 40px 0 20px 0; text-align: center; font-size: 0.9rem;
+            color: var(--secondary-text-color); border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="main-header">
+        <div class="container">
+            <div class="navbar">
+                <a href="https://flixora.my.id" class="logo">Flix<span>ora</span></a>
+                <div class="nav-right">
+                    <button class="action-button" id="theme-toggle-btn" aria-label="Toggle Theme">
+                        <i class="icon-sun" data-lucide="sun"></i>
+                        <i class="icon-moon" data-lucide="moon" style="display: none;"></i>
+                    </button>
+                    <a href="https://flixora.my.id" class="action-button" aria-label="Back to Home">
+                        <i data-lucide="home"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section id="stats-section">
+
+                <img src="https://flixora.my.id/flixora.png" alt="Flixora Banner" class="stats-banner">
+                
+                <div class="section-title-wrapper">
+                    <h2>Live Statistics</h2>
+                </div>
+                
+                <div class="stats-panel">
+                    <i data-lucide="users" class="stats-icon"></i>
+                    <div id="online-count" class="stats-value">0</div>
+                    <p class="stats-label">Pengguna Sedang Online</p>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; <span id="copyright-year"></span> Flixora. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script type="module">
+        // Import fungsi yang dibutuhkan dari Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+
+        // Konfigurasi Firebase-mu
+        const firebaseConfig = {
+            apiKey: "AIzaSyDTsYtgrRfP-d94NejtsJBBsZkM93IAAYQ",
+            authDomain: "flixora-d9bc6.firebaseapp.com",
+            databaseURL: "https://flixora-d9bc6-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "flixora-d9bc6",
+            storageBucket: "flixora-d9bc6.firebasestorage.app",
+            messagingSenderId: "323228673071",
+            appId: "1:323228673071:web:a1fa2fb622c95d2cbfd2da",
+            measurementId: "G-DKJM6TY62L"
+        };
+
+        // Menjalankan semua fungsi setelah halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Logika Statistik Real-time ---
+            try {
+                const app = initializeApp(firebaseConfig);
+                const db = getDatabase(app);
+                const onlineUsersRef = ref(db, 'online_users');
+                const countElement = document.getElementById('online-count');
+
+                onValue(onlineUsersRef, (snapshot) => {
+                    const newCount = snapshot.exists() ? snapshot.size : 0;
+                    const currentCount = parseInt(countElement.textContent, 10);
+                    if (newCount !== currentCount) {
+                        countElement.classList.add('updating');
+                        setTimeout(() => {
+                            countElement.textContent = newCount;
+                            countElement.classList.remove('updating');
+                        }, 200);
+                    }
+                });
+            } catch(e) {
+                console.error("Gagal inisialisasi Firebase:", e);
+                document.getElementById('online-count').textContent = "Err";
+            }
+
+            // --- Logika Dark Mode dari Flixora ---
+            const themeToggleBtn = document.getElementById('theme-toggle-btn');
+            const sunIcon = themeToggleBtn.querySelector('.icon-sun');
+            const moonIcon = themeToggleBtn.querySelector('.icon-moon');
+
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                }
+            };
+            const savedTheme = localStorage.getItem('theme') || 'dark'; // Default ke dark mode
+            applyTheme(savedTheme);
+
+            themeToggleBtn.addEventListener('click', () => {
+                const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+            
+            // --- Inisialisasi Ikon & Copyright dari Flixora ---
+            lucide.createIcons();
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        });
+    </script>
+
+</body>
+</html>
