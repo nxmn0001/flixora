@@ -539,6 +539,17 @@
         .offline-notification.visible {
             bottom: 20px; /* Posisi saat terlihat */
         }
+        /* Tambahkan ini di mana saja di dalam tag <style> Anda */
+        .footer-link {
+           display: block;
+           margin-top: 10px;
+           color: var(--secondary-text-color);
+           text-decoration: none;
+           transition: color 0.2s ease;
+        }
+        .footer-link:hover {
+          color: var(--accent-color);
+        }
     </style>
 </head>
 <body>
@@ -690,9 +701,12 @@
     </main>
     
     <footer class="main-footer">
-        <div class="container">
-            <p>&copy; <span id="copyright-year"></span> <span id="copyright-name"></span>. All Rights Reserved.</p>
-        </div>
+     <div class="container">
+        <p>&copy; <span id="copyright-year"></span> <span id="copyright-name"></span>. All Rights Reserved.</p>
+        
+        <a href="statistik.html" class="footer-link">Statistik Pengguna Online</a>
+        
+      </div>
     </footer>
 
     <button id="scroll-to-top-btn" aria-label="Scroll to top">
