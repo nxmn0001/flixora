@@ -7,7 +7,7 @@
 // BAGIAN 1: PENGATURAN IKLAN
 const PENGATURAN_IKLAN = [
     { id: 'iklan-topbar-promo', aktif: false, jenisPenempatan: 'top-bar', gambar: 'flixora.png', judul: 'Flixora', deskripsi: 'Join Telegram Channel', link: '#', },
-    { id: 'iklan-gambar-utama', aktif: true, jenisPenempatan: 'interstitial-gambar', tombolUtama: { teks: 'Pasang Iklan!', link: '#' }, banners: [{ gambarUrl: '1.gif', link: 'LINK' }, { gambarUrl: '1.gif', link: 'LINK' }], tunda: 3 }
+    { id: 'iklan-gambar-utama', aktif: false, jenisPenempatan: 'interstitial-gambar', tombolUtama: { teks: 'Pasang Iklan!', link: '#' }, banners: [{ gambarUrl: '1.gif', link: 'LINK' }, { gambarUrl: '1.gif', link: 'LINK' }], tunda: 3 }
 ];
 
 // BAGIAN 2: MESIN IKLAN
