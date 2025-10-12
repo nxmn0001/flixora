@@ -808,37 +808,40 @@
             // --- FUNGSI BARU: Mengacak urutan array (Fisher-Yates Shuffle) ---
             const shuffleArray = (array) => {
                 let currentIndex = array.length, randomIndex;
-                // Selama masih ada elemen untuk diacak
                 while (currentIndex !== 0) {
-                    // Ambil elemen yang tersisa
                     randomIndex = Math.floor(Math.random() * currentIndex);
                     currentIndex--;
-                    // Dan tukar dengan elemen saat ini
                     [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
                 }
                 return array;
             };
 
-            // --- PERSIAPAN KARTU UNTUK SETIAP SECTION ---
+            // --- PERSIAPAN KARTU UNTUK SETIAP SECTION (SUDAH DIPERBAIKI) ---
+
+            // Untuk Rekomendasi: Ambil SEMUA kartu, acak, lalu ambil 12
+            const shuffledAllCards = shuffleArray([...allCardElements]);
+            const rekomendasiCards = shuffledAllCards.slice(0, 12);
+
+            // Untuk section Donghua dan Random (tetap dipisah seperti semula)
             const donghuaCards = allCardElements.filter(card => card.dataset.category === 'donghua');
-            const shuffledDonghuaCards = shuffleArray([...donghuaCards]); // Buat salinan yg diacak
-            const rekomendasiCards = shuffledDonghuaCards.slice(0, 12); // Ambil 12 pertama dari yg sudah diacak
+            const randomCategoryCards = allCardElements.filter(card => card.dataset.category === 'random');
+
 
             const sections = {
                 rekomendasi: {
                     sectionEl: document.getElementById('rekomendasi-section'),
                     gridEl: document.getElementById('rekomendasi-grid'),
-                    loadMoreBtn: null, // Tidak ada tombol "Lihat Lainnya"
+                    loadMoreBtn: null,
                     loadMoreContainer: null,
-                    cards: rekomendasiCards,
-                    visibleCount: 12 // Tampilkan semua 12
+                    cards: rekomendasiCards, // Menggunakan gabungan kartu yang sudah diacak
+                    visibleCount: 12
                 },
                 donghua: {
                     sectionEl: document.getElementById('donghua-section'),
                     gridEl: document.getElementById('donghua-grid'),
                     loadMoreBtn: document.getElementById('load-more-donghua-btn'),
                     loadMoreContainer: document.getElementById('load-more-donghua-container'),
-                    cards: donghuaCards, // Gunakan list donghua yg asli (tidak diacak)
+                    cards: donghuaCards, // Tetap hanya donghua
                     visibleCount: 12
                 },
                 random: {
@@ -846,7 +849,7 @@
                     gridEl: document.getElementById('random-grid'),
                     loadMoreBtn: document.getElementById('load-more-random-btn'),
                     loadMoreContainer: document.getElementById('load-more-random-container'),
-                    cards: allCardElements.filter(card => card.dataset.category === 'random'),
+                    cards: randomCategoryCards, // Tetap hanya random
                     visibleCount: 60
                 }
             };
@@ -863,7 +866,6 @@
             };
             
             const checkAdBlock = () => {
-                // Skrip Adblock hanya berjalan saat online
                 if (navigator.onLine) {
                     fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' }))
                     .catch(err => { showAdBlockerMessage(); });
@@ -987,7 +989,6 @@
                 const s = sections[category];
                 renderCards(s.gridEl, s.cards, s.visibleCount);
 
-                // Hanya tampilkan tombol "Lihat Lainnya" jika ada
                 if (s.loadMoreContainer) {
                     if (s.visibleCount >= s.cards.length || s.cards.length === 0) {
                         s.loadMoreContainer.style.display = 'none';
@@ -1034,7 +1035,6 @@
 
             Object.keys(sections).forEach(cat => {
                 const s = sections[cat];
-                // Hanya tambahkan event listener jika tombolnya ada
                 if (s.loadMoreBtn) {
                     s.loadMoreBtn.addEventListener('click', () => {
                         s.visibleCount += 6;
@@ -1106,7 +1106,7 @@
                 showOfflineNotification();
             }
 
-            window.addEventListener('offline', showOfflineNotification);
+            window.addEventListener('online', showOfflineNotification);
             window.addEventListener('online', hideOfflineNotification);
             // --- AKHIR LOGIKA NOTIFIKASI OFFLINE ---
             
