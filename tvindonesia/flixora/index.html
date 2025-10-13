@@ -140,7 +140,7 @@
             display: block; 
             border-bottom: 1px solid var(--border-color);
         }
-         .mobile-nav .nav-item:last-child .nav-link { border-bottom: none; }
+       .mobile-nav .nav-item:last-child .nav-link { border-bottom: none; }
 
         main { padding: 40px 0; }
 
@@ -222,12 +222,14 @@
             padding: 0 20px;
             color: var(--primary-text-color);
         }
-
+        
+        /* === [DIUBAH] Dari Flexbox ke Grid === */
         .episode-list {
-            display: flex;
-            flex-direction: column; /* Mengatur item jadi vertikal */
-            gap: 10px; /* Tetap memberikan jarak antar tombol */
+            display: grid; /* Diubah dari flex */
+            grid-template-columns: repeat(2, 1fr); /* [BARU] Membuat 2 kolom */
+            gap: 10px; /* Memberi jarak antar tombol */
         }
+
         .episode-btn {
             background-color: var(--surface-color);
             border: 1px solid var(--border-color);
@@ -351,8 +353,8 @@
         #episode-target,
         #download-target,
         #tutorial-target {
-           scroll-margin-top: 85px;
-          }
+          scroll-margin-top: 85px;
+         }
         .adblock-modal { max-width: 450px; }
         .adblock-icon { width: 80px; height: 80px; stroke-width: 1.5; margin-bottom: 20px; color: #F87171; }
         .adblock-modal h2 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; }
@@ -441,16 +443,10 @@
                 <div class="video-player-wrapper">
                      <div id="placeholder-text" class="placeholder-text"></div>
                 </div>
-
-                <div class="quick-nav-buttons">
-                    <a href="#episode-target" class="episode-btn">Episode</a>
-                    <a href="#download-target" class="episode-btn">Download</a>
-                    <a href="#tutorial-target" class="episode-btn">Tutorial</a>
-                </div>
                 
                 <div class="episode-section" id="episode-target">
                     <div class="section-title-wrapper">
-                        <h3>Episode</h3>
+                        <h3>CHANNEL TV Indonesia</h3>
                     </div>
                     <div class="episode-list">
                         <button class="episode-btn" data-ep="rcti">RCTI</button>
@@ -465,26 +461,9 @@
                         <button class="episode-btn" data-ep="cnnindonesia">CNN INDONESIA</button>
                         <button class="episode-btn" data-ep="metrotv">METROTV</button>
                         <button class="episode-btn" data-ep="kompastv">KOMPASTV</button>
-                        <button class="episode-btn" data-ep="beritasatu">BERITASATU</button>
                     </div>
                 </div>
 
-                <div class="download-section" id="download-target">
-                    <div class="section-title-wrapper">
-                        <h3>Download</h3>
-                    </div>
-                    <div class="episode-list">
-                    </div>
-                </div>
-
-                <div class="tutorial-download-section" id="tutorial-target">
-                    <div class="section-title-wrapper">
-                        <h3>Tutorial Download</h3>
-                    </div>
-                    <div class="episode-list">
-                        <a href="../../tutorial" class="episode-btn" target="_blank">Lihat Tutorial</a>
-                    </div>
-                </div>
 
                 <div class="banner-container">
                     <img src="../../flixora.png" alt="Flixora" class="info-banner">
@@ -578,13 +557,13 @@
 
             const placeholderElement = document.getElementById('placeholder-text');
             if (placeholderElement) {
-                const typingText = "Silahkan Pilih Episode Untuk Menonton ૮ ⸝⸝>  ̫ <⸝⸝ ა";
+                const typingText = "Silahkan Pilih Channel Untuk Menonton ૮ ⸝⸝>  ̫ <⸝⸝ ა";
                 let charIndex = 0;
                 function typeWriter() {
                     if (charIndex < typingText.length) {
                         placeholderElement.textContent += typingText.charAt(charIndex);
                         charIndex++;
-                        setTimeout(typeWriter, 100);
+                        setTimeout(typeWriter, 0);
                     }
                 }
                 if (playerWrapper && !playerWrapper.querySelector('iframe')) {
