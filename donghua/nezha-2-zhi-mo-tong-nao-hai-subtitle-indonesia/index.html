@@ -454,7 +454,9 @@
                     </div>
                     <div class="episode-list">
                         <button class="episode-btn" data-ep="1 - 480p">1 - 480p</button>
-                    </div>
+                    
+                                        <button class="episode-btn" data-ep="1 - 720">1 - 720</button>
+                                </div>
                 </div>
 
                 <div class="download-section" id="download-target">
@@ -523,9 +525,9 @@
             const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
 
             // --- HANYA ADA DATABASE LINK NONTON ---
-            const episodeFrames = {
-                '1 - 480p': '<iframe src="https://krakenfiles.com/embed-video/a7ryTlKHll" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-            };
+            const episodeFrames = {'1 - 480p': '<iframe src="https://krakenfiles.com/embed-video/a7ryTlKHll" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+            '1 - 720': '<iframe src="https://pixeldrain.com/u/NAcgiRHZ" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+        };
             // --- TIDAK ADA LAGI JAVASCRIPT UNTUK DOWNLOAD ---
 
             const episodeButtons = document.querySelectorAll('.episode-btn');
