@@ -287,12 +287,12 @@
             background: inherit;
             background-size: cover;
             background-position: center;
-            filter: blur(5px) brightness(1);
+            filter: blur(5px) brightness(0.6);
             z-index: 1;
             transition: filter 0.3s ease; /* Transisi hover */
         }
         .slide:hover::before {
-             filter: blur(2px) brightness(1); /* Efek hover */
+             filter: blur(2px) brightness(0.7); /* Efek hover */
         }
         .slide-title {
             position: relative;
@@ -610,21 +610,13 @@
 
     <main>
         <div class="container">
-<section class="hero-section">
+        	
+         <section class="hero-section">
                 
                 <img src="https://flixora.my.id/flixora.png" alt="Flixora Banner" class="hero-banner">
                 <p class="hero-description">Jelajahi ribuan judul Donghua, anime, drakor, dracin, dan film bioskop subtitle Indonesia terlengkap, dari yang terbaru hingga yang klasik.</p>
                 
-            </section>            
-            
-            <section class="slider-section">
-                <div class="slider-container">
-                    <div class="slider-wrapper">
-                        </div>
-                    <button class="slider-btn prev-btn" aria-label="Previous Slide"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-btn next-btn" aria-label="Next Slide"><i class="fas fa-chevron-right"></i></button>
-                </div>
-            </section>
+            </section>                        
 
             <section id="rekomendasi-section">
                 <div class="section-title-wrapper">
