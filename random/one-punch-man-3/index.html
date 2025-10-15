@@ -454,7 +454,9 @@
                     </div>
                     <div class="episode-list">
                         <button class="episode-btn" data-ep="1">1</button>
-                    </div>
+                    
+                                        <button class="episode-btn" data-ep="2">2</button>
+                                </div>
                 </div>
 
                 <div class="download-section" id="download-target">
@@ -521,9 +523,9 @@
             const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
 
             // --- HANYA ADA DATABASE LINK NONTON ---
-            const episodeFrames = {
-                '1': '<iframe src="https://s1.kotakanimeid.link/video-embed/?vid=TndsUytJanpnRnYrQk0xRnEwR1VzSnI1bHk1bWhVelVPWlBZQXQra2lDbTRQQ3dBUXFhL01sdWVOWG1ESmlyeWFIYkwxVzlvL0FneTJnR01QWVkwaFNYclV5d0YveE81R0pjYmRseFJYK2Rkakl6d0VXOUpoRUQwSlFQVkdqdXpIckErcEV6cFJ6MlF0ZVhRWHdVTUNqdHRleW10dmE2N01FMkl3WFVaVm5YbFFLblVxYWVKeUdtK2VDcm5ZVExMc0xESEtzQlR5L2gxN2w2cmhKSWM4UzQ5eVMxcUVIc2hkejVSdXNqMk00NUo0aExxY09ReGc3amxjUTVUM1ZaWGdCMk9FVzNnNUovL1JmRytubDBGNzBhUFJtZmRBWlgvOHRKRGd5NEQ&autoplay=true" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-            };
+            const episodeFrames = {'1': '<iframe src="https://s1.kotakanimeid.link/video-embed/?vid=TndsUytJanpnRnYrQk0xRnEwR1VzSnI1bHk1bWhVelVPWlBZQXQra2lDbTRQQ3dBUXFhL01sdWVOWG1ESmlyeWFIYkwxVzlvL0FneTJnR01QWVkwaFNYclV5d0YveE81R0pjYmRseFJYK2Rkakl6d0VXOUpoRUQwSlFQVkdqdXpIckErcEV6cFJ6MlF0ZVhRWHdVTUNqdHRleW10dmE2N01FMkl3WFVaVm5YbFFLblVxYWVKeUdtK2VDcm5ZVExMc0xESEtzQlR5L2gxN2w2cmhKSWM4UzQ5eVMxcUVIc2hkejVSdXNqMk00NUo0aExxY09ReGc3amxjUTVUM1ZaWGdCMk9FVzNnNUovL1JmRytubDBGNzBhUFJtZmRBWlgvOHRKRGd5NEQ&autoplay=true" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+            '2': '<iframe src="https://www.blogger.com/video.g?token=AD6v5dy6T73pHRwiFygtYrYWaDp0H0rzZuT9HoxLWviQCmF70MQs77Uk0tf0-KQBPbHBE77EliEiry5JJtK98alJ8V2iAJIRhjgwbtpFQtjLQ01DePOQkSjAD7t6jpZrwoGcOCr3pM8" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+        };
             // --- TIDAK ADA LAGI JAVASCRIPT UNTUK DOWNLOAD ---
 
             const episodeButtons = document.querySelectorAll('.episode-btn');
