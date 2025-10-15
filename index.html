@@ -252,92 +252,6 @@
             }
         }
         
-        /* --- STYLE BANNER BARU --- */
-        .slider-section {
-            margin-bottom: 60px;
-        }
-        .slider-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 16px;
-            cursor: grab;
-        }
-        .slider-wrapper {
-            display: flex;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .slide {
-            flex: 1 0 100%;
-            position: relative;
-            aspect-ratio: 16 / 9;
-            background-size: cover;
-            background-position: center;
-            color: #FFFFFF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 70px;
-            text-align: center;
-            text-decoration: none; /* Tambahan untuk tag <a> */
-        }
-        .slide::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: inherit;
-            background-size: cover;
-            background-position: center;
-            filter: blur(5px) brightness(0.6);
-            z-index: 1;
-            transition: filter 0.3s ease; /* Transisi hover */
-        }
-        .slide:hover::before {
-             filter: blur(2px) brightness(0.7); /* Efek hover */
-        }
-        .slide-title {
-            position: relative;
-            z-index: 2;
-            font-size: 2.5rem;
-            font-weight: 800;
-            padding: 0px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
-        }
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-            background-color: rgba(0, 0, 0, 0.4);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s ease;
-        }
-        .slider-btn:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-        .slider-btn.prev-btn {
-            left: 15px;
-        }
-        .slider-btn.next-btn {
-            right: 15px;
-        }
-        @media (max-width: 768px) {
-            .slide-title { font-size: 1.8rem; }
-            .slider-btn { width: 38px; height: 38px; font-size: 1rem; }
-        }
-        @media (max-width: 480px) {
-            .slide-title { font-size: 1.2rem; }
-        }
-        /* --- AKHIR STYLE BANNER BARU --- */
-        
         #donghua-section, #random-section, #rekomendasi-section {
              scroll-margin-top: 90px;
         }
@@ -539,7 +453,6 @@
         .offline-notification.visible {
             bottom: 20px; /* Posisi saat terlihat */
         }
-        /* Tambahkan ini di mana saja di dalam tag <style> Anda */
         .footer-link {
            display: block;
            margin-top: 10px;
@@ -548,7 +461,7 @@
            transition: color 0.2s ease;
         }
         .footer-link:hover {
-          color: var(--accent-color);
+           color: var(--accent-color);
         }
     </style>
 </head>
@@ -583,7 +496,7 @@
                         </ul>
                     </nav>
                     <div class="nav-right">
-                        <a href="tvindonesia" class="action-button" aria-label="Nonton TV Indonesia"><i data-lucide="tv"></i></a>                    	
+                        <a href="tvindonesia" class="action-button" aria-label="Nonton TV Indonesia"><i data-lucide="tv"></i></a>                     
                         <a href="https://t.me/+jbwkTntNvak1MzM1" target="_blank" class="action-button" aria-label="Join Telegram"><i data-lucide="send"></i></a>
                         <button class="action-button" id="theme-toggle-btn" aria-label="Toggle Theme">
                             <i class="icon-sun" data-lucide="sun"></i>
@@ -610,20 +523,17 @@
 
     <main>
         <div class="container">
-        	
-         <section class="hero-section">
-                
+            <section class="hero-section">
                 <img src="https://flixora.my.id/flixora.png" alt="Flixora Banner" class="hero-banner">
                 <p class="hero-description">Jelajahi ribuan judul Donghua, anime, drakor, dracin, dan film bioskop subtitle Indonesia terlengkap, dari yang terbaru hingga yang klasik.</p>
-                
-            </section>                        
-
+            </section>         
+            
             <section id="rekomendasi-section">
                 <div class="section-title-wrapper">
                     <h2>REKOMENDASI</h2>
                 </div>
                 <div class="content-grid" id="rekomendasi-grid">
-                    </div>
+                </div>
             </section>
             
             <section id="donghua-section">
@@ -643,7 +553,7 @@
                 </div>
                 <p class="section-description">Anime, drakor, dracin, dan film bioskop tersedia di Flixora. Gunakan fitur pencarian untuk menemukan judul yang Anda inginkan. Jika hasil pencarian tidak ditemukan, tombol request akan otomatis muncul agar Anda dapat mengajukan permintaan.</p>
                 <div class="content-grid" id="random-grid">
-                     </div>
+                       </div>
                <div class="load-more-container" id="load-more-random-container">
                     <button class="load-more-btn" id="load-more-random-btn">Lihat Lainnya</button>
                 </div>
@@ -661,13 +571,13 @@
             </div>
 
             <div id="card-database" style="display: none;">
-                                    <div class="thumbnail-card" data-title="One Hit Wonder (2025)" data-category="random"><a href="random/one-hit-wonder-2025/"><img src="random/one-hit-wonder-2025/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">One Hit Wonder (2025)</h3></div></div>
-                                    <div class="thumbnail-card" data-title="Ansatsusha de Aru Ore no Status ga Yuusha yori mo Akiraka ni Tsuyoi no da ga" data-category="random"><a href="donghua/ansatsusha-de-aru-ore-no-status-ga-yuusha-yori-mo-akiraka-ni-tsuyoi-no-da-ga/"><img src="donghua/ansatsusha-de-aru-ore-no-status-ga-yuusha-yori-mo-akiraka-ni-tsuyoi-no-da-ga/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Ansatsusha de Aru Ore no Status ga Yuusha yori mo Akiraka ni Tsuyoi no da ga</h3></div></div>
-                                    <div class="thumbnail-card" data-title="Sozai Saishuka no Isekai Ryokouki Subtitle Indonesia" data-category="random"><a href="random/sozai-saishuka-no-isekai-ryokouki-subtitle-indonesia/"><img src="random/sozai-saishuka-no-isekai-ryokouki-subtitle-indonesia/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Sozai Saishuka no Isekai Ryokouki Subtitle Indonesia</h3></div></div>
-                                    <div class="thumbnail-card" data-title="Wonder Park (2019)" data-category="random"><a href="random/wonder-park-2019/"><img src="random/wonder-park-2019/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Wonder Park (2019)</h3></div></div>
-                                    <div class="thumbnail-card" data-title="Buzz House: The Movie 2 (2025)" data-category="random"><a href="random/buzz-house-the-movie-2-2025/"><img src="random/buzz-house-the-movie-2-2025/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Buzz House: The Movie 2 (2025)</h3></div></div>
-                                    <div class="thumbnail-card" data-title="Nezha  2 : Zhi Mo Tong Nao Hai Subtitle Indonesia" data-category="random"><a href="donghua/nezha-2-zhi-mo-tong-nao-hai-subtitle-indonesia/"><img src="donghua/nezha-2-zhi-mo-tong-nao-hai-subtitle-indonesia/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Nezha  2 : Zhi Mo Tong Nao Hai Subtitle Indonesia</h3></div></div>
-                                <div class="thumbnail-card" data-title="1st Kiss (2025)" data-category="random"><a href="random/1st-kiss-2025/"><img src="random/1st-kiss-2025/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">1st Kiss (2025)</h3></div></div>
+                                  <div class="thumbnail-card" data-title="One Hit Wonder (2025)" data-category="random"><a href="random/one-hit-wonder-2025/"><img src="random/one-hit-wonder-2025/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">One Hit Wonder (2025)</h3></div></div>
+                                  <div class="thumbnail-card" data-title="Ansatsusha de Aru Ore no Status ga Yuusha yori mo Akiraka ni Tsuyoi no da ga" data-category="random"><a href="donghua/ansatsusha-de-aru-ore-no-status-ga-yuusha-yori-mo-akiraka-ni-tsuyoi-no-da-ga/"><img src="donghua/ansatsusha-de-aru-ore-no-status-ga-yuusha-yori-mo-akiraka-ni-tsuyoi-no-da-ga/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Ansatsusha de Aru Ore no Status ga Yuusha yori mo Akiraka ni Tsuyoi no da ga</h3></div></div>
+                                  <div class="thumbnail-card" data-title="Sozai Saishuka no Isekai Ryokouki Subtitle Indonesia" data-category="random"><a href="random/sozai-saishuka-no-isekai-ryokouki-subtitle-indonesia/"><img src="random/sozai-saishuka-no-isekai-ryokouki-subtitle-indonesia/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Sozai Saishuka no Isekai Ryokouki Subtitle Indonesia</h3></div></div>
+                                  <div class="thumbnail-card" data-title="Wonder Park (2019)" data-category="random"><a href="random/wonder-park-2019/"><img src="random/wonder-park-2019/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Wonder Park (2019)</h3></div></div>
+                                  <div class="thumbnail-card" data-title="Buzz House: The Movie 2 (2025)" data-category="random"><a href="random/buzz-house-the-movie-2-2025/"><img src="random/buzz-house-the-movie-2-2025/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Buzz House: The Movie 2 (2025)</h3></div></div>
+                                  <div class="thumbnail-card" data-title="Nezha  2 : Zhi Mo Tong Nao Hai Subtitle Indonesia" data-category="random"><a href="donghua/nezha-2-zhi-mo-tong-nao-hai-subtitle-indonesia/"><img src="donghua/nezha-2-zhi-mo-tong-nao-hai-subtitle-indonesia/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Nezha  2 : Zhi Mo Tong Nao Hai Subtitle Indonesia</h3></div></div>
+                                  <div class="thumbnail-card" data-title="1st Kiss (2025)" data-category="random"><a href="random/1st-kiss-2025/"><img src="random/1st-kiss-2025/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">1st Kiss (2025)</h3></div></div>
                                 <div class="thumbnail-card" data-title="Oh, Hi! (2025)" data-category="random"><a href="random/oh-hi-2025/"><img src="random/oh-hi-2025/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Oh, Hi! (2025)</h3></div></div>
                                 <div class="thumbnail-card" data-title="The 4 Rascals (2025)" data-category="random"><a href="random/the-4-rascals-2025/"><img src="random/the-4-rascals-2025/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">The 4 Rascals (2025)</h3></div></div>
                                 <div class="thumbnail-card" data-title="Lovesick (2025)" data-category="random"><a href="random/lovesick-2025/"><img src="random/lovesick-2025/gambar.jpg" alt="Flixora" class="thumbnail-image"></a><div class="card-overlay"><h3 class="card-title">Lovesick (2025)</h3></div></div>
@@ -807,7 +717,7 @@
             const searchGrid = document.getElementById('search-grid');
             const noResultsMessage = document.getElementById('no-results-message');
 
-            // --- FUNGSI BARU: Mengacak urutan array (Fisher-Yates Shuffle) ---
+            // --- FUNGSI: Mengacak urutan array (Fisher-Yates Shuffle) ---
             const shuffleArray = (array) => {
                 let currentIndex = array.length, randomIndex;
                 while (currentIndex !== 0) {
@@ -818,37 +728,7 @@
                 return array;
             };
             
-            // --- PERUBAHAN 2: FUNGSI UNTUK MEMBUAT BANNER DINAMIS ---
-            const createDynamicBanner = () => {
-                const sliderWrapper = document.querySelector('.slider-wrapper');
-                if (!sliderWrapper) return;
-
-                // 1. Filter kartu dengan kategori 'donghua'
-                const donghuaCardsForBanner = allCardElements.filter(card => card.dataset.category === 'donghua');
-                
-                // 2. Acak urutan kartu donghua
-                const shuffledDonghua = shuffleArray([...donghuaCardsForBanner]);
-                
-                // 3. Ambil 10 kartu pertama setelah diacak
-                const bannerSlidesData = shuffledDonghua.slice(0, 10);
-                
-                // 4. Buat elemen HTML untuk setiap slide
-                const bannerHTML = bannerSlidesData.map(card => {
-                    const link = card.querySelector('a').href;
-                    const image = card.querySelector('img').src;
-                    const title = card.dataset.title;
-                    return `
-                        <a href="${link}" class="slide" style="background-image: url('${image}');">
-                            <h2 class="slide-title">${title}</h2>
-                        </a>
-                    `;
-                }).join('');
-                
-                // 5. Masukkan HTML yang sudah dibuat ke dalam slider wrapper
-                sliderWrapper.innerHTML = bannerHTML;
-            };
-
-            // --- PERSIAPAN KARTU UNTUK SETIAP SECTION (SUDAH DIPERBAIKI) ---
+            // --- PERSIAPAN KARTU UNTUK SETIAP SECTION ---
 
             // Untuk Rekomendasi: Ambil SEMUA kartu, acak, lalu ambil 12
             const shuffledAllCards = shuffleArray([...allCardElements]);
@@ -865,7 +745,7 @@
                     gridEl: document.getElementById('rekomendasi-grid'),
                     loadMoreBtn: null,
                     loadMoreContainer: null,
-                    cards: rekomendasiCards, // Menggunakan gabungan kartu yang sudah diacak
+                    cards: rekomendasiCards,
                     visibleCount: 12
                 },
                 donghua: {
@@ -873,7 +753,7 @@
                     gridEl: document.getElementById('donghua-grid'),
                     loadMoreBtn: document.getElementById('load-more-donghua-btn'),
                     loadMoreContainer: document.getElementById('load-more-donghua-container'),
-                    cards: donghuaCards, // Tetap hanya donghua
+                    cards: donghuaCards,
                     visibleCount: 12
                 },
                 random: {
@@ -881,7 +761,7 @@
                     gridEl: document.getElementById('random-grid'),
                     loadMoreBtn: document.getElementById('load-more-random-btn'),
                     loadMoreContainer: document.getElementById('load-more-random-container'),
-                    cards: randomCategoryCards, // Tetap hanya random
+                    cards: randomCategoryCards,
                     visibleCount: 60
                 }
             };
@@ -915,106 +795,13 @@
             };
             checkAdBlock();
             
-            // --- PERUBAHAN 3: PANGGIL FUNGSI PEMBUAT BANNER SEBELUM SLIDER DIINISIALISASI ---
-            createDynamicBanner();
-
-
-            // --- FUNGSI BANNER SLIDER BARU ---
-            const sliderContainer = document.querySelector('.slider-container');
-            if (sliderContainer) {
-                const sliderWrapper = sliderContainer.querySelector('.slider-wrapper');
-                const slides = sliderWrapper.querySelectorAll('.slide');
-                const prevBtn = sliderContainer.querySelector('.prev-btn');
-                const nextBtn = sliderContainer.querySelector('.next-btn');
-                const slideCount = slides.length;
-
-                let currentIndex = 0;
-                let isDragging = false;
-                let startPos = 0;
-                let currentTranslate = 0;
-                let prevTranslate = 0;
-                let animationID;
-
-                if (slideCount <= 1) {
-                    prevBtn.style.display = 'none';
-                    nextBtn.style.display = 'none';
-                }
-
-                const getPositionX = (event) => event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-                const setSliderPosition = () => sliderWrapper.style.transform = `translateX(${currentTranslate}px)`;
-                
-                const dragStart = (e) => {
-                    isDragging = true;
-                    startPos = getPositionX(e);
-                    sliderWrapper.style.transition = 'none';
-                    animationID = requestAnimationFrame(animation);
-                };
-                
-                const dragMove = (e) => {
-                    if (isDragging) {
-                        const currentPosition = getPositionX(e);
-                        currentTranslate = prevTranslate + currentPosition - startPos;
-                    }
-                };
-
-                const dragEnd = (e) => {
-                    const movedBy = currentTranslate - prevTranslate;
-                    if (Math.abs(movedBy) > 5) {
-                        e.preventDefault();
-                    }
-
-                    isDragging = false;
-                    cancelAnimationFrame(animationID);
-                    sliderContainer.style.cursor = 'grab';
-
-                    if (movedBy < -100 && currentIndex < slideCount - 1) currentIndex++;
-                    if (movedBy > 100 && currentIndex > 0) currentIndex--;
-
-                    goToSlide(currentIndex);
-                };
-                
-                function animation() {
-                    setSliderPosition();
-                    if (isDragging) requestAnimationFrame(animation);
-                }
-                
-                function goToSlide(index) {
-                    sliderWrapper.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-                    currentTranslate = index * -sliderContainer.clientWidth;
-                    prevTranslate = currentTranslate;
-                    setSliderPosition();
-                }
-
-                nextBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex + 1) % slideCount;
-                    goToSlide(currentIndex);
-                });
-
-                prevBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex - 1 + slideCount) % slideCount;
-                    goToSlide(currentIndex);
-                });
-
-                sliderContainer.addEventListener('mousedown', dragStart);
-                sliderContainer.addEventListener('touchstart', dragStart, { passive: true });
-                sliderContainer.addEventListener('mousemove', dragMove);
-                sliderContainer.addEventListener('touchmove', dragMove, { passive: true });
-                sliderContainer.addEventListener('mouseup', dragEnd);
-                sliderContainer.addEventListener('touchend', dragEnd);
-                sliderContainer.addEventListener('mouseleave', () => { if (isDragging) dragEnd(); });
-                sliderContainer.addEventListener('click', dragEnd, true);
-                
-                window.addEventListener('resize', () => goToSlide(currentIndex));
-            }
-            // --- AKHIR FUNGSI BANNER SLIDER BARU ---
-
             // --- Fungsi Inti ---
 
             const renderCards = (gridEl, cards, count) => {
                 gridEl.innerHTML = '';
                 if (cards.length === 0) {
-                     gridEl.innerHTML = '<p class="no-content-message">Comingsoon 𓂂ɞ̴̶̷ ₃ ɞ̴̶̷𓂂</p>';
-                       return;
+                       gridEl.innerHTML = '<p class="no-content-message">Comingsoon 𓂂ɞ̴̶̷ ₃ ɞ̴̶̷𓂂</p>';
+                           return;
                 }
                 cards.slice(0, count).forEach(card => {
                     gridEl.appendChild(card.cloneNode(true));
@@ -1036,11 +823,9 @@
 
             const manageLayout = () => {
                 const query = searchInput.value.toLowerCase().trim();
-                const bannerSection = document.querySelector('.slider-section');
                 
                 if (query) {
                     heroSection.style.display = 'none';
-                    if (bannerSection) bannerSection.style.display = 'none';
                     Object.values(sections).forEach(s => {
                         s.sectionEl.style.display = 'none';
                         if (s.loadMoreContainer) s.loadMoreContainer.style.display = 'none';
@@ -1053,7 +838,6 @@
                     noResultsMessage.style.display = filteredCards.length === 0 ? 'block' : 'none';
                 } else {
                     heroSection.style.display = 'block';
-                    if (bannerSection) bannerSection.style.display = 'block';
                     searchResultsContainer.style.display = 'none';
                     Object.keys(sections).forEach(cat => {
                          sections[cat].sectionEl.style.display = 'block';
@@ -1127,7 +911,7 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
             
-            // --- LOGIKA NOTIFIKASI OFFLINE BARU ---
+            // --- LOGIKA NOTIFIKASI OFFLINE ---
             const offlineNotif = document.getElementById('offline-notification');
 
             const showOfflineNotification = () => {
@@ -1142,8 +926,8 @@
                 showOfflineNotification();
             }
 
-            window.addEventListener('online', showOfflineNotification);
             window.addEventListener('online', hideOfflineNotification);
+            window.addEventListener('offline', showOfflineNotification);
             // --- AKHIR LOGIKA NOTIFIKASI OFFLINE ---
             
             initializePage();
