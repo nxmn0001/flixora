@@ -454,7 +454,9 @@
                     </div>
                     <div class="episode-list">
                         <button class="episode-btn" data-ep="1">1</button>
-                    </div>
+                    
+                                        <button class="episode-btn" data-ep="2">2</button>
+                                </div>
                 </div>
 
                 <div class="download-section" id="download-target">
@@ -521,9 +523,9 @@
             const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
 
             // --- HANYA ADA DATABASE LINK NONTON ---
-            const episodeFrames = {
-                '1': '<iframe src="https://www.blogger.com/video.g?token=AD6v5dye8wpK_VsGqpvG8hbfd3b1BzVhO4sqRyj7D_0SfuNTMkKv03f07oEPPnFCbAUFbXk7m1ByXYcVoqSuzVsE5t8wZ2Pc8pImFcYoMtr-Bwx1n7GeieUUWMDvNU9vhFVzq-E6cq0" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-            };
+            const episodeFrames = {'1': '<iframe src="https://www.blogger.com/video.g?token=AD6v5dye8wpK_VsGqpvG8hbfd3b1BzVhO4sqRyj7D_0SfuNTMkKv03f07oEPPnFCbAUFbXk7m1ByXYcVoqSuzVsE5t8wZ2Pc8pImFcYoMtr-Bwx1n7GeieUUWMDvNU9vhFVzq-E6cq0" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+            '2': '<iframe src="https://www.blogger.com/video.g?token=AD6v5dxfPeV6kdIBgBwmUKYKUd76RwpUZrntgWXXhhoegrmr-ETa2dsCXY5_v3vbPC1Ciz_IAoNrS6kVMroKTRyFUyxqXoFaYdgracqt-yw9N0D5BG2YXGGAgL2dpy9Q-U4RISbNILi3" title="Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+        };
             // --- TIDAK ADA LAGI JAVASCRIPT UNTUK DOWNLOAD ---
 
             const episodeButtons = document.querySelectorAll('.episode-btn');
