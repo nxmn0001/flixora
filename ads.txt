@@ -2651,3 +2651,4 @@ zmaticoo.com, 113149, RESELLER
 zmaticoo.com, 5135004, RESELLER
 zmaticoo.com, 5135082, RESELLER
 zoklent.com, zok-1000, RESELLER
+pubfuture.com, 68f4f4317600e544cb0fd793, DIRECT
