@@ -2652,3 +2652,7 @@ zmaticoo.com, 5135004, RESELLER
 zmaticoo.com, 5135082, RESELLER
 zoklent.com, zok-1000, RESELLER
 pubfuture.com, 68f4f4317600e544cb0fd793, DIRECT
+pgamssp.com, 68a49e170f831721500d5d4f, RESELLER
+rubiconproject.com, 24852, RESELLER, 0bfd66d529a55807
+sharethrough.com, FhiWXM0L, RESELLER, d53b998a7bd4ecd2
+video.unrulymedia.com, 5921144960123684292, RESELLER
